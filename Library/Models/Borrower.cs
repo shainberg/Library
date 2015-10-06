@@ -7,6 +7,11 @@ using System.Web;
 
 namespace Library.Models
 {
+    public enum Sex
+    {
+        Female,
+        Male
+    }
     public class Borrower
     {
         [Key]
@@ -18,6 +23,9 @@ namespace Library.Models
         [DisplayName("Last Name")]
         [Required]
         public string lastName { get; set; }
+        [DisplayName("Sex")]
+        [Required]
+        public Sex sex { get; set; }
         [DisplayName("Phone")]
         [Required]
         public string phone { get; set; }

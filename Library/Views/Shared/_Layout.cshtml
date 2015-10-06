@@ -3,37 +3,49 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - The Librarians'</title>
+    <link rel="import" href="~/Scripts/components/bower_components/polymer/polymer.html" />
+    <link rel="import" href="~/Scripts/components/bower_components/paper-styles/paper-styles.html">
+    <link rel="import" href="~/Scripts/components/bower_components/paper-material/paper-material.html" />
+    <link rel="import" href="~/Scripts/components/bower_components/paper-button/paper-button.html" />
+    <link rel="import" href="~/Scripts/components/bower_components/paper-header-panel/paper-header-panel.html" />
+    <link rel="import" href="~/Scripts/components/bower_components/paper-toolbar/paper-toolbar.html" />
+    <link rel="import" href="~/Scripts/components/bower_components/paper-tabs/paper-tabs.html" />
+    
+    @Styles.Render("~/Scripts/components/bower_components/webcomponentsjs/webcomponents-lite.js")
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/layout.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
+    <paper-material elevation="1">
+        <paper-header-panel class="flex" shadow="true">
+            <paper-toolbar>
+                <div>Paradise</div>
+            </paper-toolbar>
+            <paper-tabs selected="0" class="paper-header">
+                <paper-tab link>
+                    @Html.ActionLink("Home", "Index", "Home", new { @class = "horizontal center-center layout" })
+                    @*<a href="/" class="horizontal center-center layout">Books</a>*@
+                </paper-tab>
+                <paper-tab link>
+                    @Html.ActionLink("About", "About", "Home", new { @class = "horizontal center-center layout" })
+                    @*<a href="#link2" class="horizontal center-center layout">Borrow</a>*@
+                </paper-tab>
+                <paper-tab link>
+                    @Html.ActionLink("Contact", "Contact", "Home", new { @class = "horizontal center-center layout" })
+                    @*<a href="#link3" class="horizontal center-center layout">Borrowers</a>*@
+                </paper-tab>
+            </paper-tabs>
+        </paper-header-panel>
+
+    </paper-material>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Paradise - Or Shainberg and Adi Siman Tov</p>
         </footer>
     </div>
 

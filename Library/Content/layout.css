@@ -1,0 +1,9 @@
+   paper-header-panel, paper-toolbar {
+            background-color: #9E9E9E !important /*var(--paper-cyan-500)*/;
+            color: white;
+        }
+
+        paper-tabs a {
+            color: white;
+            text-decoration: initial;
+        }

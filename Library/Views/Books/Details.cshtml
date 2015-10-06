@@ -1,0 +1,107 @@
+﻿@model Library.Models.Book
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.author)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.publisher)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.publisher)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.publicationYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.publicationYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.language)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.language)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.series)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.series)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.summery)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.summery)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.copies)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.copies)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.trailerURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.trailerURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.picture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.picture)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

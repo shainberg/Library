@@ -7,6 +7,13 @@ using System.Web;
 
 namespace Library.Models
 {
+
+    public enum Language
+    {
+        Hebrew,
+        English
+    }
+ 
     public class Book
     {
         [Key]
@@ -26,7 +33,7 @@ namespace Library.Models
         public int publicationYear { get; set; }
         [DisplayName("Language")]
         [Required]
-        public string language { get; set; }
+        public Language language { get; set; }
         [DisplayName("Series")]
         public string series { get; set; }
         [DisplayName("Summery")]

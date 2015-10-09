@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using Library.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Library
@@ -8,6 +9,7 @@ namespace Library
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new LoginFilter());
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Library.Models
 
         [DisplayName("password")]
         public string password { get; set; }
-     
+
+        [DisplayName("isAdmin")]
+        public bool isAdmin { get; set; }
     }
 }

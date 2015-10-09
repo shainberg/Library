@@ -34,5 +34,7 @@ namespace Library.Models
         public string address { get; set; }
         [DisplayName("Mail")]
         public string mail { get; set; }
+        [DisplayName("User")]
+        public User user { get; set; }
     }
 }

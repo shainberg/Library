@@ -36,6 +36,8 @@ namespace Library.Models
         public Language language { get; set; }
         [DisplayName("Series")]
         public string series { get; set; }
+        [DisplayName("Number")]
+        public string number { get; set; }
         [DisplayName("Summery")]
         public string summery { get; set; }
         [DisplayName("Category")]
@@ -43,8 +45,6 @@ namespace Library.Models
         [DisplayName("Copies")]
         [Required]
         public int copies{ get; set; }
-        [DisplayName("Trailer URL")]
-        public string trailerURL { get; set; }
         [DisplayName("Picture")]
         public byte[] picture { get; set; }
         

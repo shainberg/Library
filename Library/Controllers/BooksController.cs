@@ -13,7 +13,7 @@ namespace Library.Controllers
 {
     public class BooksController : Controller
     {
-        private parContext db = new parContext();
+        private paraContext db = new paraContext();
 
         // GET: Books
         public async Task<ActionResult> Index()
@@ -60,7 +60,7 @@ namespace Library.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,title,author,publisher,publicationYear,language,series,summery,category,copies,trailerURL,picture")] Book book)
+        public async Task<ActionResult> Create([Bind(Include = "id,title,author,publisher,publicationYear,language,series,summery,number,category,copies,trailerURL,picture")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace Library.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,title,author,publisher,publicationYear,language,series,summery,category,copies,trailerURL,picture")] Book book)
+        public async Task<ActionResult> Edit([Bind(Include = "id,title,author,publisher,publicationYear,language,series,summery,numbere,category,copies,trailerURL,picture")] Book book)
         {
             if (ModelState.IsValid)
             {

@@ -1,0 +1,51 @@
+﻿<div id="all-books" class="tab-pane">
+
+    <h2>Books</h2>
+    <table id="books" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Series</th>
+                <th>Number</th>
+                <th>Publication Year</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div id="detailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Details</h4>
+            </div>
+            <div class="modal-body">
+                <div id="wrap">
+                    <img class="book-picture" src="../../Img/No_Image_Available.png" />
+                    <div class="details-div">
+                        <h4 class="book-title" id="detailsBookTitle"></h4> &nbsp;
+                        <h5 class="book-series" id=" detailsbookseries"></h5>
+                        <h6 class="sub-title" id="detailsBookAuthor"></h6>
+                        <h6 class="sub-title" id="detailsCopies"></h6>
+                    </div>
+                </div>
+                <div class="details-class">
+                    <div class="book-summery" id="detailsBookSummery">
+                    </div>
+                    <p class="book-publish-data" id="detailsBookPublishData">
+                    </p>
+                    <p class="book-category" id="detailsBookCategory"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

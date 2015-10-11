@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - The Librarians'</title>
+    <title>Paradise</title>
     
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/paradise")
     @RenderSection("scripts", required: false)
 
 </head>
@@ -21,25 +22,40 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("PARADISE", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                    <li class="active"><a href="#HomePage" role="tab" data-toggle="tab">PARADISE</a></li>
+                    <li><a href="#all-books" role="tab" data-toggle="tab">Books</a></li>
+                    <li><a href="#all-borrows" role="tab" data-toggle="tab">Borrows</a></li>
+                    <li><a href="#readers" role="tab" data-toggle="tab">Readers</a></li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <form class="navbar-form navbar-left" role="search" onsubmit="return false">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search Book" id="search-books-input">
+                    </div>
+                    <button type="submit" class="btn btn-default" onclick="searchBook()">Submit</button>
+                </form>
             </div>
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Paradise - Or Shainberg and Adi Siman Tov</p>
-        </footer>
-    </div>
+        <section id="alternate" class="col-md-10 col-md-offset-1 tab-content">
+            <div id="HomePage" class="tab-pane active">
+                @Html.Partial("../Home/HomePage")
+            </div>
+            @Html.Partial("../Books/Books")
+            @Html.Partial("../Readers/Readers")
+            @Html.Partial("../Borrows/Borrows")
+         </section>
 
+        <section class="content-wrapper main-content clear-fix">
+            @RenderBody()
+        </section>
+</div>
+    <hr />
+<footer>
+    <p>&copy; @DateTime.Now.Year - Paradise - Or Shainberg and Adi Siman Tov</p>
+</footer>
 </body>
 </html>

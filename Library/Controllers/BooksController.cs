@@ -38,7 +38,7 @@ namespace Library.Controllers
             return Json(b.getAllBooks(), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getDetails(int id)
+        public JsonResult getBookById(int id)
         {
             return Json(b.getBookByID(id), JsonRequestBehavior.AllowGet);
         }

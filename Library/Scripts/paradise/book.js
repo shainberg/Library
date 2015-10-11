@@ -8,7 +8,7 @@ $(document).ready(function() {
 function openDetailsModal(id) {
     $.ajax({
         dataType: "json",
-        url: "Books/getDetails",
+        url: "Books/getBookById",
         data: { "id": id },
         success: function (book) {
             debugger;

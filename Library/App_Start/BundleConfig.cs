@@ -9,7 +9,7 @@ namespace Library
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/paradise").Include(
-                        "~/Scripts/paradise*"));
+                        "~/Scripts/paradise/book.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Library.Models
 {
-    public class parContext : DbContext
+    public class paraContext : DbContext
     {
         public DbSet<Book> books { get; set; }
         public DbSet<Borrower> borrowers { get; set; }

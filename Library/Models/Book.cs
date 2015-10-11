@@ -47,6 +47,76 @@ namespace Library.Models
         public int copies{ get; set; }
         [DisplayName("Picture")]
         public byte[] picture { get; set; }
-        
+
+        public Boolean addNewBook()
+        {
+            paraContext context = new paraContext();
+            try
+            {
+                context.books.Add(this);
+                context.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public Boolean lendBook(int bookId)
+        {
+            Boolean answer = false;
+            paraContext context = new paraContext();
+            Book book = context.books.Find(id);
+
+            if (book != null && book.copies > 0)
+            {
+                book.copies--;
+                context.SaveChanges();
+                answer = true;
+            }
+
+            return (answer);
+        }
+
+        public Boolean deleteBook(String id)
+        {
+            Boolean answer = false;
+            paraContext context = new paraContext();
+
+            Book book = context.books.Find(id);
+            if (book != null)
+            {
+                context.books.Remove(book);
+
+                //TODO:
+                //var movieLink = from userMovies in context.UserMovies
+                //                where userMovies.MovieID == mID
+                //                select userMovies;
+
+                //foreach (var currMovie in movieLink)
+                //{
+                //    context.UserMovies.Remove(currMovie);
+                //}
+
+                answer = (context.SaveChanges() > 0);
+            }
+
+            return (answer);
+        }
+
+        public IEnumerable<Book> getAllBooks()
+        {
+            paraContext context = new paraContext();
+            return (context.books.ToList<Book>());
+        }
+
+        public Book getBookByID(int id)
+        {
+            paraContext context = new paraContext();
+            return (context.books.Find(id));
+        }
+
     }
 }

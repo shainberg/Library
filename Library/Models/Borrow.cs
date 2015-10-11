@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -12,11 +13,15 @@ namespace Library.Models
         [Key]
         [DisplayName("Seq Number")]
         public int seqNumber { get; set; }
-        [DisplayName("Book")]
+        [DisplayName("BookId")]
         [Required]
+        public int bookId { get; set; }
+        [ForeignKey("bookId")]
         public Book book { get; set; }
-        [DisplayName("Borrower")]
+        [DisplayName("BorrowerId")]
         [Required]
+        public int borrowerId { get; set; }
+        [ForeignKey("borrowerId")]
         public Borrower borrower { get; set; }
         [DisplayName("Borrow Date")]
         [Required]

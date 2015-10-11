@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace Library.Models
 {
-    public enum Sex
-    {
-        Female,
-        Male
-    }
     public class Borrower
     {
         [Key]
@@ -25,7 +21,8 @@ namespace Library.Models
         public string lastName { get; set; }
         [DisplayName("Sex")]
         [Required]
-        public Sex sex { get; set; }
+        [StringLength(1)]
+        public string sex { get; set; }
         [DisplayName("Phone")]
         [Required]
         public string phone { get; set; }
@@ -35,6 +32,64 @@ namespace Library.Models
         [DisplayName("Mail")]
         public string mail { get; set; }
         [DisplayName("User")]
+        public int userId { get; set; } 
+        [ForeignKey("userId")]
         public User user { get; set; }
+
+        public Boolean addNewBook()
+        {
+            paradiseContext context = new paradiseContext();
+            try
+            {
+                context.borrowers.Add(this);
+                context.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public Boolean deleteBorrower(String id)
+        {
+            Boolean answer = false;
+            paradiseContext context = new paradiseContext();
+
+            Borrower borrower = context.borrowers.Find(id);
+            if (borrower != null)
+            {
+                context.borrowers.Remove(borrower);
+
+                //TODO:
+                //var movieLink = from userMovies in context.UserMovies
+                //                where userMovies.MovieID == mID
+                //                select userMovies;
+
+                //foreach (var currMovie in movieLink)
+                //{
+                //    context.UserMovies.Remove(currMovie);
+                //}
+
+                answer = (context.SaveChanges() > 0);
+            }
+
+            return (answer);
+        }
+
+        public IEnumerable<Borrower> getAllBorrowers()
+        {
+            paradiseContext context = new paradiseContext();
+            return (context.borrowers.ToList<Borrower>());
+        }
+
+        public Borrower getBorrowerByUserID(int id)
+        {
+            paradiseContext context = new paradiseContext();
+            return (context.borrowers.FirstOrDefault(m => m.user.id == id));
+        }
+
+
     }
 }

@@ -6,8 +6,13 @@ using System.Web;
 
 namespace Library.Models
 {
-    public class paraContext : DbContext
+    public class paradiseContext : DbContext
     {
+        public paradiseContext()
+            : base("DefaultConnection")
+        {
+        }
+
         public DbSet<Book> books { get; set; }
         public DbSet<Borrower> borrowers { get; set; }
         public DbSet<Borrow> borrows { get; set; }

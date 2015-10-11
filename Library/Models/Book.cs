@@ -7,13 +7,6 @@ using System.Web;
 
 namespace Library.Models
 {
-
-    public enum Language
-    {
-        Hebrew,
-        English
-    }
- 
     public class Book
     {
         [Key]
@@ -33,7 +26,8 @@ namespace Library.Models
         public int publicationYear { get; set; }
         [DisplayName("Language")]
         [Required]
-        public Language language { get; set; }
+        [StringLength(2)]
+        public string language { get; set; }
         [DisplayName("Series")]
         public string series { get; set; }
         [DisplayName("Number")]
@@ -50,7 +44,7 @@ namespace Library.Models
 
         public Boolean addNewBook()
         {
-            paraContext context = new paraContext();
+            paradiseContext context = new paradiseContext();
             try
             {
                 context.books.Add(this);
@@ -67,7 +61,7 @@ namespace Library.Models
         public Boolean lendBook(int bookId)
         {
             Boolean answer = false;
-            paraContext context = new paraContext();
+            paradiseContext context = new paradiseContext();
             Book book = context.books.Find(id);
 
             if (book != null && book.copies > 0)
@@ -83,7 +77,7 @@ namespace Library.Models
         public Boolean deleteBook(String id)
         {
             Boolean answer = false;
-            paraContext context = new paraContext();
+            paradiseContext context = new paradiseContext();
 
             Book book = context.books.Find(id);
             if (book != null)
@@ -108,13 +102,13 @@ namespace Library.Models
 
         public IEnumerable<Book> getAllBooks()
         {
-            paraContext context = new paraContext();
+            paradiseContext context = new paradiseContext();
             return (context.books.ToList<Book>());
         }
 
         public Book getBookByID(int id)
         {
-            paraContext context = new paraContext();
+            paradiseContext context = new paradiseContext();
             return (context.books.Find(id));
         }
 

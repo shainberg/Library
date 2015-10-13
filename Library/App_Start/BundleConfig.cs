@@ -9,16 +9,11 @@ namespace Library
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/paradise").Include(
-                        "~/Scripts/paradise/book.js"));
+                        "~/Scripts/paradise/book.js",
+                        "~/Scripts/paradise/borrower.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                        "~/Scripts/bootstrap*",
-                         "~/Scripts/d3*",
-                        "~/Scripts/jquery.dataTables*",
-                        "~/Scripts/dataTables.bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -38,7 +33,9 @@ namespace Library
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/books.css"));
+                      "~/Content/books.css",
+                      "~/Content/readers.css",
+                      "~/Content/dataTables.bootstrap.css"));
         }
     }
 }

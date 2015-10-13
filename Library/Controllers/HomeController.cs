@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,16 @@ namespace Library.Controllers
     {
         public ActionResult Index()
         {
+            object id = this.Session["connected"];
+            if (id != null)
+            {
+                ViewBag.isAdmin = Library.Models.User.isUserAdmin(Convert.ToInt32(id));
+            }
+            else
+            {
+                ViewBag.isAdmin = false;
+            }
+
             return View();
         }
 

@@ -25,10 +25,27 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#HomePage" role="tab" data-toggle="tab">PARADISE</a></li>
+                    <li class="active" id="mainParadise"><a href="#HomePage" role="tab" data-toggle="tab">PARADISE</a></li>
                     <li><a href="#all-books" role="tab" data-toggle="tab">Books</a></li>
-                    <li><a href="#all-borrows" role="tab" data-toggle="tab">Borrows</a></li>
-                    <li><a href="#readers" role="tab" data-toggle="tab">Readers</a></li>
+                    @{if (ViewBag.isAdmin)
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    
+                                    <li><a href="#movies-top-rated" role="tab" data-toggle="tab">Manage Books</a></li>
+                                    <li><a href="#movies-theaters" role="tab" data-toggle="tab">Manage Borrows</a></li>
+                                    <li><a href="#movies-theaters" role="tab" data-toggle="tab">Manage Borrowers</a></li>
+                                </ul>
+                            </li>
+                        }
+}
+                    @{if (!ViewBag.isAdmin)
+                        { 
+                            <li><a href="#borrower-library-card" role="tab" data-toggle="tab">Library Card</a></li>
+                        }
+                    }
+                                      @*<li><a href="#readers" role="tab" data-toggle="tab">Readers</a></li>*@
                 </ul>
                 <form class="navbar-form navbar-left" role="search" onsubmit="return false">
                     <div class="form-group">
@@ -44,9 +61,10 @@
             <div id="HomePage" class="tab-pane active">
                 @Html.Partial("../Home/HomePage")
             </div>
-            @Html.Partial("../Books/Books")
             @Html.Partial("../Readers/Readers")
             @Html.Partial("../Borrows/Borrows")
+            @Html.Partial("../Books/Books")
+
          </section>
 
         <section class="content-wrapper main-content clear-fix">

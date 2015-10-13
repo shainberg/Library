@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -36,7 +37,7 @@ namespace Library.Models
         [ForeignKey("userId")]
         public User user { get; set; }
 
-        public Boolean addNewBook()
+        public Boolean addNewBorrower()
         {
             paradiseContext context = new paradiseContext();
             try
@@ -90,6 +91,17 @@ namespace Library.Models
             return (context.borrowers.FirstOrDefault(m => m.user.id == id));
         }
 
-
+        public bool updateBorrower(Borrower borrower)
+        {
+            paradiseContext context = new paradiseContext();
+            try{
+                context.Entry(borrower).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            catch{
+                return false;
+            }
+            return true;
+        }
     }
 }

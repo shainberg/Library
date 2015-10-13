@@ -1,5 +1,95 @@
-﻿<div id="readers" class="tab-pane">
+﻿<div id="reader" class="tab-pane">
 
     <h2>readers</h2>
 </div>
 
+<div id="edit-profile" class="tab-pane">
+    <div>
+        <br />
+            <input id="updateBorrowerUserId" type="hidden"/>
+            <label>ID:</label><input class="form-control" id="updateBorrowerId" />
+            <label>First Name:</label><input class="form-control"  id="updateBorrowerFirstName" />
+            <label>Last Name:</label><input class="form-control" id="updateBorrowerLastName" />
+        <br />
+            <label>Sex:</label>
+            <label class="radio-inline">
+                <input type="radio" name="sexOptionsRadio" value="M"> Male
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="sexOptionsRadio" value="F"> Female
+            </label>
+        <br />
+            <label>Phone:</label><input class="form-control" id="updateBorrowerPhone" />
+            <label>Address:</label><input class="form-control" id="updateBorrowerAddress" />
+            <label>Mail:</label><input class="form-control" id="updateBorrowerMail" />
+    </div>
+    <hr />
+    <button class="btn btn-default" id="saveBorrowerChanges">Save</button>
+    <a href="#borrower-library-card" id="backToCardLink" class="btn btn-default" role="button" data-toggle="tab">Back to User Card</a>
+
+</div>
+
+<div id="borrower-library-card" class="tab-pane">
+
+    <h3  id="cardHeader"></h3><a href="#edit-profile" role="tab" data-toggle="tab">(edit profile)</a>
+    <br />
+    <div>
+        <div class="borrower-details">
+            <label>Name:</label><span id="borrowerFirstName"></span>&nbsp;<span id="borrowerLastName"></span>
+            <br />
+            <label>Sex:</label><span id="borrowerSex"></span>
+            <br />
+            <label>Phone:</label><span id="borrowerPhone"></span>
+            <br />
+            <label>Address:</label><span id="borrowerAddress"></span>
+            <br />
+            <label>Mail:</label><span id="borrowerMail"></span>
+        </div>
+        <hr />
+        <div id="userOpenBorrowsTabla">
+            <table title="Open Borrows" class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Borrow Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="userOpenBorrowsTablaBody"></tbody>
+            </table>
+        </div>
+        <p id="userOpenBorrowsTablaNone">there are no open borrows</p>
+        <button class="btn btn-default" id="showBorrowerHistory">Show Borrow History</button>
+    </div>
+</div>
+
+
+<div id="userBorrowHistory" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Borrow History</h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Borrow Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="userBorrowHistoryTableBody"></tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

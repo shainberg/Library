@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -42,12 +43,34 @@ namespace Library.Models
         [DisplayName("Picture")]
         public byte[] picture { get; set; }
 
-        public Boolean addNewBook()
+        public bool returnBook()
+        {
+            this.copies++;
+            return this.updateDB();
+        }
+
+        public bool borrowBook()
+        {
+            bool answer = false;
+
+            if (this.copies > 0)
+            {
+                this.copies--;
+                if (this.updateDB())
+                {
+                    answer = true;
+                }
+            }
+
+            return (answer);
+        }
+
+        public static Boolean addNewBook(Book book)
         {
             paradiseContext context = new paradiseContext();
             try
             {
-                context.books.Add(this);
+                context.books.Add(book);
                 context.SaveChanges();
 
                 return true;
@@ -58,55 +81,51 @@ namespace Library.Models
             }
         }
 
-        public Boolean lendBook(int bookId)
+        public bool updateDB()
         {
-            Boolean answer = false;
             paradiseContext context = new paradiseContext();
-            Book book = context.books.Find(id);
-
-            if (book != null && book.copies > 0)
+            try
             {
-                book.copies--;
+                context.Entry(this).State = EntityState.Modified;
                 context.SaveChanges();
-                answer = true;
             }
-
-            return (answer);
+            catch
+            {
+                return false;
+            }
+            return true;
         }
 
-        public Boolean deleteBook(String id)
+
+        public Boolean deleteBook()
         {
             Boolean answer = false;
             paradiseContext context = new paradiseContext();
 
-            Book book = context.books.Find(id);
-            if (book != null)
-            {
-                context.books.Remove(book);
+            context.books.Remove(this);
 
-                //TODO:
-                //var movieLink = from userMovies in context.UserMovies
-                //                where userMovies.MovieID == mID
-                //                select userMovies;
+            //TODO:
+            //var movieLink = from userMovies in context.UserMovies
+            //                where userMovies.MovieID == mID
+            //                select userMovies;
 
-                //foreach (var currMovie in movieLink)
-                //{
-                //    context.UserMovies.Remove(currMovie);
-                //}
+            //foreach (var currMovie in movieLink)
+            //{
+            //    context.UserMovies.Remove(currMovie);
+            //}
 
-                answer = (context.SaveChanges() > 0);
-            }
+            answer = (context.SaveChanges() > 0);
 
             return (answer);
         }
 
-        public IEnumerable<Book> getAllBooks()
+        public static IEnumerable<Book> getAllBooks()
         {
             paradiseContext context = new paradiseContext();
             return (context.books.ToList<Book>());
         }
 
-        public Book getBookByID(int id)
+        public static Book getBookByID(int id)
         {
             paradiseContext context = new paradiseContext();
             return (context.books.Find(id));

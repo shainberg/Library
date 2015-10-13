@@ -6,39 +6,22 @@ $(document).ready(function() {
 });
 
 function openDetailsModal(id) {
-    $.ajax({
-        dataType: "json",
-        url: "Books/getBookById",
-        data: { "id": id },
-        success: function (book) {
-            debugger;
-            $('#detailsBookTitle').text(book.title);
-            $('#detailsBookSeries').text('(' + book.series + ((book.number) ? ' #' + book.number : "") + ')');
-            $('#detailsBookAuthor').text('by ' + book.author);
-            $('#detailsCopies').text(book.copies + ' copies available')
-            $('#detailsBookSummery').text(book.summery);
-            $('#detailsBookPublishData').text('published at ' + book.publicationYear + ' by ' + book.publisher + ', ' + book.language);
-            $('#detailsBookCategory').text(book.category);
-        }});
+        $.ajax({
+            dataType: "json",
+            url: "Books/getBookById",
+            data: { "id": id },
+            success: function (book) {
+                debugger;
+                $('#detailsBookTitle').text(book.title);
+                $('#detailsBookSeries').text('(' + book.series + ((book.number) ? ' #' + book.number : "") + ')');
+                $('#detailsBookAuthor').text('by ' + book.author);
+                $('#detailsCopies').text(book.copies + ' copies available')
+                $('#detailsBookSummery').text(book.summery);
+                $('#detailsBookPublishData').text('published at ' + book.publicationYear + ' by ' + book.publisher + ', ' + book.language);
+                $('#detailsBookCategory').text(book.category);
+            }});
 
-    $('#detailsModal').modal('show');
-
-
-    //$('#detailsModal').on('shown.bs.modal', function () {
-    //    book = getDetails(id);
-    //    debugger;
-    //    $('#detailsBookTitle').text(book.title);
-    //    $('#detailsBookSeries').text('(' + book.series + ((book.number) ? ' #' + book.number : "") + ')');
-    //    $('#detailsBookAuthor').text('by ' + book.author);
-    //    $('#detailsCopies').text(book.copies + ' copies available')
-    //    $('#detailsBookSummery').text(book.summery);
-    //    $('#detailsBookPublishData').text('published at ' + book.publicationYear + ' by ' + book.publisher + ', ' + book.language);
-    //    $('#detailsBookCategory').text(book.category);
-
-    //    $('#deleteBook').click(function () {
-
-    //    });
-    //});
+        $('#detailsModal').modal('show');
 };
 
 
@@ -56,7 +39,7 @@ function showAllBooks() {
                     "autoWidth": false,
                     "ordering": false,
                     "columnDefs": [{
-                        "targets": [5],
+                        "targets": [6],
                         "mData":"id",
                         "mRender": function (data, type, full) {
                             debugger;
@@ -70,7 +53,7 @@ function showAllBooks() {
             var booksJson = [];
 
             $.each(data, function (idx, obj) {
-                booksJson.push([obj.title, obj.author, obj.series, obj.number, obj.publicationYear]);
+                booksJson.push([obj.title, obj.author, obj.series, obj.number, obj.publicationYear,obj.copies]);
             });
 
             oTable.fnAddData(booksJson);

@@ -22,7 +22,7 @@ namespace Library.Controllers
             object oId = this.Session["connected"];
             if (oId != null)
             {
-                return getBorrowerByUserId(Convert.ToInt32(oId));
+                return getBorrowerByUserId(oId.ToString());
             }
 
             return null;
@@ -33,7 +33,7 @@ namespace Library.Controllers
             return Json(b.getAllBorrowers(), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getBorrowerByUserId(int userId)
+        public JsonResult getBorrowerByUserId(string userId)
         {
             return Json(b.getBorrowerByUserID(userId), JsonRequestBehavior.AllowGet);
         }

@@ -11,7 +11,7 @@ namespace Library.Models
     {
         [Key]
         [DisplayName("ID")]
-        public int id { get; set; }
+        public string id { get; set; }
 
         [DisplayName("password")]
         public string password { get; set; }
@@ -19,7 +19,7 @@ namespace Library.Models
         [DisplayName("isAdmin")]
         public bool isAdmin { get; set; }
 
-        public static Boolean isUserAdmin(int id)
+        public static Boolean isUserAdmin(string id)
         {
             paradiseContext context = new paradiseContext();
             var answer = from users in context.users

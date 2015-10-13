@@ -37,7 +37,7 @@ namespace Library.Models
             return (context.borrows.Find(id));
         }
 
-        public IEnumerable<object> getOpenBorrowByUserID(int id)
+        public IEnumerable<object> getOpenBorrowByUserID(string id)
         {
             paradiseContext context = new paradiseContext();
 
@@ -73,7 +73,7 @@ namespace Library.Models
             return borrows;
         }
 
-        public IEnumerable<object> getBorrowHistoryByUserID(int id)
+        public IEnumerable<object> getBorrowHistoryByUserID(string id)
         {
             paradiseContext context = new paradiseContext();
 

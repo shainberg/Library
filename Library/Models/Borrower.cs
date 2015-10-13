@@ -33,7 +33,7 @@ namespace Library.Models
         [DisplayName("Mail")]
         public string mail { get; set; }
         [DisplayName("User")]
-        public int userId { get; set; } 
+        public string userId { get; set; } 
         [ForeignKey("userId")]
         public User user { get; set; }
 
@@ -85,7 +85,7 @@ namespace Library.Models
             return (context.borrowers.ToList<Borrower>());
         }
 
-        public Borrower getBorrowerByUserID(int id)
+        public Borrower getBorrowerByUserID(string id)
         {
             paradiseContext context = new paradiseContext();
             return (context.borrowers.FirstOrDefault(m => m.user.id == id));

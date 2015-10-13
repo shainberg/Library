@@ -14,7 +14,7 @@ namespace Library.Controllers
             object id = this.Session["connected"];
             if (id != null)
             {
-                ViewBag.isAdmin = Library.Models.User.isUserAdmin(Convert.ToInt32(id));
+                ViewBag.isAdmin = Library.Models.User.isUserAdmin(id.ToString());
             }
             else
             {

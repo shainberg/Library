@@ -22,7 +22,7 @@ namespace Library.Controllers
             object oId = this.Session["connected"];
             if (oId != null)
             {
-                return getOpenBorrows(Convert.ToInt32(oId));
+                return getOpenBorrows(oId.ToString());
             }
 
             return null;
@@ -33,19 +33,19 @@ namespace Library.Controllers
             object oId = this.Session["connected"];
             if (oId != null)
             {
-                return getBorrowsHistory(Convert.ToInt32(oId));
+                return getBorrowsHistory(oId.ToString());
             }
 
             return null;
         }
 
-        public JsonResult getBorrowsHistory(int userId)
+        public JsonResult getBorrowsHistory(string userId)
         {
             return Json(b.getBorrowHistoryByUserID(userId), JsonRequestBehavior.AllowGet);
         }
 
 
-        public JsonResult getOpenBorrows(int userId)
+        public JsonResult getOpenBorrows(string userId)
         {
             return Json(b.getOpenBorrowByUserID(userId), JsonRequestBehavior.AllowGet);
         }

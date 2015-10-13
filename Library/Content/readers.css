@@ -1,0 +1,12 @@
+﻿#cardHeader{
+    display:inline;
+    margin-right:10px;
+}
+#borrower-library-card{
+    margin-top:10px;
+}
+
+
+.borrower-details {
+    padding: 10px 40px;
+}

@@ -160,19 +160,30 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\BorrowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\BorrowerController.cs" />
     <Compile Include="Filters\LoginFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510122109389_initialCreate.cs" />
+    <Compile Include="Migrations\201510122109389_initialCreate.Designer.cs">
+      <DependentUpon>201510122109389_initialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510122110470_initial.cs" />
+    <Compile Include="Migrations\201510122110470_initial.Designer.cs">
+      <DependentUpon>201510122110470_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Borrow.cs" />
     <Compile Include="Models\Borrower.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\parContext.cs" />
+    <Compile Include="Models\paradiseContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,12 +192,14 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\layout.css" />
-    <Content Include="Content\signin.css" />
+    <Content Include="Content\books.css" />
+    <Content Include="Content\dataTables.bootstrap.css" />
+    <Content Include="Content\readers.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Img\No_Image_Available.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\components\bower_components\font-roboto\bower.json" />
@@ -808,19 +821,29 @@
     <Content Include="Scripts\components\bower_components\webcomponentsjs\webcomponents-lite.min.js" />
     <Content Include="Scripts\components\bower_components\webcomponentsjs\webcomponents.js" />
     <Content Include="Scripts\components\bower_components\webcomponentsjs\webcomponents.min.js" />
+    <Content Include="Scripts\d3.js" />
+    <Content Include="Scripts\d3.layout.cloud.js" />
+    <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\HtmlPage1.html" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\paradise\book.js" />
+    <Content Include="Scripts\paradise\borrow.js" />
+    <Content Include="Scripts\paradise\borrower.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -831,8 +854,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -855,16 +876,20 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Login\LoginOld.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Books\Create.cshtml" />
     <Content Include="Views\Books\Delete.cshtml" />
-    <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
-    <Content Include="Views\Login\LoginNew.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
+    <Content Include="Views\Books\Books.cshtml" />
+    <Content Include="Views\Home\HomePage.cshtml" />
+    <Content Include="Views\Borrows\Borrows.cshtml" />
+    <Content Include="Views\Readers\Readers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Borrow\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -872,6 +897,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510122109389_initialCreate.resx">
+      <DependentUpon>201510122109389_initialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510122110470_initial.resx">
+      <DependentUpon>201510122110470_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

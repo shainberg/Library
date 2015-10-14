@@ -10,7 +10,8 @@ namespace Library
         {
             bundles.Add(new ScriptBundle("~/bundles/paradise").Include(
                         "~/Scripts/paradise/book.js",
-                        "~/Scripts/paradise/borrower.js"));
+                        "~/Scripts/paradise/borrower.js",
+                        "~/Scripts/paradise/borrow.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));

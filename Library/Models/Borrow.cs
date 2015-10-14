@@ -113,6 +113,41 @@ namespace Library.Models
             return borrows;
         }
 
+        public IEnumerable<object> getAllBorrows()
+        {
+            paradiseContext context = new paradiseContext();
+
+            var borrows = (from borrow in context.borrows
+                           select new
+                           {
+                               borrowSeqNumber = borrow.seqNumber,
+                               borrowerId = borrow.borrower.id,
+                               borrowerFirstName = borrow.borrower.firstName,
+                               borrowerLastName = borrow.borrower.lastName,
+                               bookId = borrow.book.id,
+                               bookTitle = borrow.book.title,
+                               bookAuthor = borrow.book.author,
+                               borrowDate = borrow.borrowDate,
+                               returnDate = borrow.ReturnDate
+
+                           })
+                             .ToList()
+                             .Select(x => new
+                             {
+                                 borrowSeqNumber = x.borrowSeqNumber,
+                                 borrowerId = x.borrowerId,
+                                 borrowerFirstName = x.borrowerFirstName,
+                                 borrowerLastName = x.borrowerLastName,
+                                 bookId = x.bookId,
+                                 bookTitle = x.bookTitle,
+                                 bookAuthor = x.bookAuthor,
+                                 borrowDate = x.borrowDate.ToString("dd/MM/yyyy"),
+                                 returnDate = (x.returnDate.HasValue ? x.returnDate.Value.ToString("MM/dd/yyyy") : string.Empty)
+                             });
+
+            return borrows;
+        }
+
         public bool updateBorrow(Borrow borrow)
         {
             paradiseContext context = new paradiseContext();

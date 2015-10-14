@@ -16,6 +16,11 @@ namespace Library.Controllers
         {
             return View();
         }
+        public JsonResult getAllBorrows()
+        {
+            return Json(b.getAllBorrows(), JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult getCurrentBorrowerOpenBorrows()
         {

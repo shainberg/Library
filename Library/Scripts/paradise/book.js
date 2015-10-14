@@ -1,7 +1,24 @@
 ﻿
-$(document).ready(function() {
+$(document).ready(function () {
     $("a[href='#all-books']").on('click', function () {
         showAllBooks();
+    });
+    $("a[href='#admin-manage-books']").on('click', function () {
+        $.ajax({
+            url: "Books/getAllBooks",
+            type: "GET",
+            success: function (data) {
+                $("#adminBooksTableBody").empty();
+                $.each(data, function (idx, obj) {
+                    row = "<tr><td>" + obj.title + "</td><td>" + obj.author +
+                     "</td><td>" + obj.series + "</td><td>" + obj.number +
+                     "</td><td>" + obj.publicationYear + "</td><td>" + obj.copies +
+                     "</td><td>" + "</td></tr>";
+                    $("#adminBooksTableBody").append(row);
+                });
+
+            }
+        });
     });
 });
 
@@ -60,19 +77,3 @@ function showAllBooks() {
         }
     });
 }
-
-
-function getDetails(id) {
-    var book;
-    $.ajax({
-        dataType: "json",
-        url: "/Books/getDetails",
-        data: { "id": id },
-        async: false
-    })
-        .success(function (data) {
-            book = data;
-        });
-    debugger;
-    return book;
-};

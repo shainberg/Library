@@ -4,6 +4,25 @@
         showOpenBorrows();
     });
 
+    $("a[href='#admin-manage-borrowers']").on('click', function () {
+        $.ajax({
+            url: "Borrower/getAllBorrowers",
+            type: "GET",
+            success: function (data) {
+                debugger;
+                $("#adminBorrowersTableBody").empty();
+                $.each(data, function (idx, obj) {
+                    row = "<tr><td>" + obj.id + "</td><td>" + obj.firstName + " " + obj.lastName +
+                     "</td><td>" + obj.sex + "</td><td>" + obj.address +
+                     "</td><td>" + obj.phone + "</td><td>" + obj.mail +
+                     "</td><td>test</td></tr>" + "</td></tr>";
+                    $("#adminBorrowersTableBody").append(row);
+                });
+
+            }
+        });
+    });
+
     $("#showBorrowerHistory").click(function () {
         openBorrowsHistoryModal()
     });

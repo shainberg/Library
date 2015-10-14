@@ -43,7 +43,7 @@ namespace Library.Controllers
                         }
 
                         ViewBag.Error = false;
-                        RedirectToAction("index", "Home");
+                        return RedirectToAction("index", "Home");
                     }
                 }
             }

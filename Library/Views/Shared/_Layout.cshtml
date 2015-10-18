@@ -12,6 +12,22 @@
     @Scripts.Render("~/bundles/paradise")
     @RenderSection("scripts", required: false)
 
+    <script>
+    jQuery(document).ready(function($) {
+    $.ajax({
+    url : "http://api.wunderground.com/api/fec570dea30f6169/conditions/q/autoip.json",
+    dataType : "jsonp",
+    success : function(parsed_json) {
+        debugger;
+        $("#weatherImg").attr('src', 'http://icons.wxug.com/i/c/k/nt_clear.gif');
+        $("#temperature").html(parsed_json.current_observation.feelslike_c + '&deg;');
+    /*var location = parsed_json['location']['city'];
+    var temp_f = parsed_json['current_observation']['temp_f'];
+    alert("Current temperature in " + location + " is: " + temp_f);*/
+    }
+    });
+    });
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,6 +41,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li id="weather"><span id="temperature" style="color:white; font-size:xx-large"></span><img id="weatherImg"/></li>
                     <li class="active" id="mainParadise"><a href="#HomePage" role="tab" data-toggle="tab">PARADISE</a></li>
                     <li><a href="#all-books" role="tab" data-toggle="tab">Books</a></li>
                     @{if (ViewBag.isAdmin)

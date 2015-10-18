@@ -15,7 +15,16 @@
                     row = "<tr><td>" + obj.id + "</td><td>" + obj.firstName + " " + obj.lastName +
                      "</td><td>" + obj.sex + "</td><td>" + obj.address +
                      "</td><td>" + obj.phone + "</td><td>" + obj.mail +
-                     "</td><td>test</td></tr>" + "</td></tr>";
+                    "</td><td><span title='Details' " +
+                            "onclick='openBorrowerDetailsModal(" + obj.id + ")'" +
+                             "class='glyphicon glyphicon-list-alt'></span>" +
+                     "| <span title='Edit' " +
+                            "onclick='openEditBorrowerModal(" + obj.id + ")'" +
+                             "class='glyphicon glyphicon-edit'></span>" +
+                     "| <span title='Delete' " +
+                            "onclick='openDeleteBorrowerValidation(" + obj.id + ")'" +
+                             "class='glyphicon glyphicon-trash'></span>"
+                    + "</td></tr>";
                     $("#adminBorrowersTableBody").append(row);
                 });
 
@@ -53,6 +62,22 @@
         });
     });
 });
+
+function returnBook(borrowSeq) {
+    $.ajax({
+        dataType: "json",
+        data: { "borrowSeq": borrowSeq },
+        url: "Borrow/returnBorrow",
+        success: function (message) {
+            if (!message) {
+                showOpenBorrows();
+            }
+            else {
+                alert(message);
+            }
+        }
+    });
+};
 
 function showOpenBorrows() {
     debugger;
@@ -99,21 +124,7 @@ function openBorrowsHistoryModal() {
         }
     });
 };
-function returnBook(borrowSeq) {
-    $.ajax({
-        dataType: "json",
-        data: { "borrowSeq": borrowSeq },
-        url: "Borrow/returnBorrow",
-        success: function (message) {
-            if (!message) {
-                showOpenBorrows();
-            }
-            else {
-                alert(message);
-            }
-        }
-    });
-};
+
 
     function showBorrowerProfile() {
         $.ajax({

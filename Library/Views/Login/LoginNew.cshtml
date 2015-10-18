@@ -17,7 +17,7 @@
     <title>Library</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrapNew.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="~/Content/signin.css" rel="stylesheet">
@@ -45,8 +45,16 @@
             <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
+        @{if (ViewBag.Error == true)
+          {
+              <p class="bg-danger center-block">
+                  Opps, invalid cardentials :( <br />
+                  Please try again.
+              </p>
+          }     
+        }
         <br />
-        <video src="~/Img/What is the future of the library (1).mp4" controls style="right :50%; left:50%"></video>
+        <video src="~/Img/What is the future of the library (1).mp4" controls autoplay class="center-block"></video>
     </div> <!-- /container -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>

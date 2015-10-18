@@ -9,7 +9,6 @@ namespace Library.Controllers
 {
     public class BorrowerController : Controller
     {
-        Borrower b = new Borrower();
 
         // GET: Readers
         public ActionResult Index()
@@ -22,7 +21,7 @@ namespace Library.Controllers
             object oId = this.Session["connected"];
             if (oId != null)
             {
-                return getBorrowerByUserId(Convert.ToInt32(oId));
+                return getBorrowerByUserId(oId.ToString());
             }
 
             return null;
@@ -30,19 +29,19 @@ namespace Library.Controllers
 
         public JsonResult getAllBorrowers()
         {
-            return Json(b.getAllBorrowers(), JsonRequestBehavior.AllowGet);
+            return Json(Borrower.getAllBorrowers(), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getBorrowerByUserId(int userId)
+        public JsonResult getBorrowerByUserId(string userId)
         {
-            return Json(b.getBorrowerByUserID(userId), JsonRequestBehavior.AllowGet);
+            return Json(Borrower.getBorrowerByUserID(userId), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult updateBorrower([Bind(Include = "id,userId,firstName,lastName,sex,phone,address,mail")] Borrower borrower)
         {
             string message = "";
             if (ModelState.IsValid) {
-                if (!b.updateBorrower(borrower))
+                if (!borrower.updateBorrower())
                 {
                     message = "there's a problem.... try again later";
                 }

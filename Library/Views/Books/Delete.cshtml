@@ -5,109 +5,49 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+    <div class="alert alert-warning" >
+        are you sure you want to delete this book?
+        <input type="submit" value="Delete" class="btn btn-default" /> 
+        <a href="@Url.Action("DeleteConfirmed", new { id = Model.id })">
+            <button class="btn btn-default">Delete</button>
+        </a>
+        <a href="@Url.Action("Index")">
+            <button class="btn btn-default">Back to List</button>
+        </a>
+    </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.author)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.author)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.publisher)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.publisher)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.publicationYear)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.publicationYear)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.language)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.language)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.series)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.series)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.summery)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.summery)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.category)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.category)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.copies)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.copies)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.trailerURL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.trailerURL)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.picture)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.picture)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+@{
+    var imgSrc = "../../Img/No_Image_Available.png";
+    if (Model.picture != null)
+    {
+        var base64 = Convert.ToBase64String(Model.picture);
+        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
     }
+}
+<div id="wrap">
+    <img class="detailsBookPicture" src="@imgSrc" />
+    <div id="detailsDiv">
+        <h4 id="detailsBookTitle">@Html.DisplayFor(model => model.title) </h4> &nbsp;
+        <h5 id="detailsBookSeries">
+            (@Html.DisplayFor(model => model.series)
+            @if (Model.number != null)
+            {
+                <text>#</text>
+                @Html.DisplayFor(model => model.number)})
+        </h5>
+        <h6 class="sub-title" id="detailsBookAuthor">by @Html.DisplayFor(model => model.author)</h6>
+        <h6 class="sub-title" id="detailsCopies">@Html.DisplayFor(model => model.copies) copies available</h6>
+    </div>
 </div>
+<div class="details-class">
+    <div id="detailsBookSummery">
+        @Html.DisplayFor(model => model.summery)
+    </div>
+    <p id="detailsBookPublishData">
+        published at @Html.DisplayFor(model => model.publicationYear) by
+        @Html.DisplayFor(model => model.publisher), @Html.DisplayFor(model => model.language)
+    </p>
+    <p id="detailsBookCategory">@Html.DisplayFor(model => model.category)</p>
+</div>
+
+

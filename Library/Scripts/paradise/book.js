@@ -13,7 +13,16 @@ $(document).ready(function () {
                     row = "<tr><td>" + obj.title + "</td><td>" + obj.author +
                      "</td><td>" + obj.series + "</td><td>" + obj.number +
                      "</td><td>" + obj.publicationYear + "</td><td>" + obj.copies +
-                     "</td><td>" + "</td></tr>";
+                     "</td><td><span title='Details' " +
+                            "onclick='openBookDetailsModal(" + obj.id + ")'" +
+                             "class='glyphicon glyphicon-list-alt'></span>" +
+                     "| <span title='Edit' " +
+                            "onclick='openEditBookModal(" + obj.id + ")'" +
+                             "class='glyphicon glyphicon-edit'></span>" +
+                     "| <span title='Delete' " +
+                            "onclick='openDeleteBookValidation("+obj.id+")'" +
+                             "class='glyphicon glyphicon-trash'></span>"
+                    +"</td></tr>";
                     $("#adminBooksTableBody").append(row);
                 });
 
@@ -22,7 +31,7 @@ $(document).ready(function () {
     });
 });
 
-function openDetailsModal(id) {
+function openBookDetailsModal(id) {
         $.ajax({
             dataType: "json",
             url: "Books/getBookById",
@@ -36,6 +45,9 @@ function openDetailsModal(id) {
                 $('#detailsBookSummery').text(book.summery);
                 $('#detailsBookPublishData').text('published at ' + book.publicationYear + ' by ' + book.publisher + ', ' + book.language);
                 $('#detailsBookCategory').text(book.category);
+                $('#borrowBook').click(function () {
+                    borrowBook(book.id);
+                });
             }});
 
         $('#detailsModal').modal('show');
@@ -60,7 +72,7 @@ function showAllBooks() {
                         "mData":"id",
                         "mRender": function (data, type, full) {
                             debugger;
-                            return "<a onclick='openDetailsModal("+full[3]+")')>See Details</a>";
+                            return "<a onclick='openBookDetailsModal("+full[5]+")')>See Details</a>";
                         }
                     }]
                 });

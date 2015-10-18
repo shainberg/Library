@@ -23,13 +23,33 @@ namespace Library.Controllers
             if (id != null && password != null)
             {
                 /*Query From users table*/
-                
+                paradiseContext context = new paradiseContext();
+                var result = from users in context.users
+                                where users.id.Equals(id) &&
+                                users.password.Equals(password)
+                                select users;
 
-                HttpContext.Session.Add("Connected", id);
+                if (result != null)
+                {
+                    User[] users = result.ToArray<User>();
+
+                    if (users.Length == 1)
+                    {
+                        HttpContext.Session.Add("Connected", users[0].id);
+
+                        if (true.Equals(users[0].isAdmin))
+                        {
+                            HttpContext.Session.Add("IsAdmin", true);
+                        }
+
+                        ViewBag.Error = false;
+                        return RedirectToAction("index", "Home");
+                    }
+                }
             }
 
-            return RedirectToAction("index", "Home");
-
+            ViewBag.Error = true;
+            return View("LoginNew");
         }
     }
 }

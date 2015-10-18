@@ -40,6 +40,11 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Edit", new { id = Model.id })">
+        <button class="btn btn-default">Edit</button>
+    </a>
+    <button class="btn btn-default">Borrow History</button>
+    <a href="@Url.Action("Index")">
+        <button class="btn btn-default">Back to List</button>
+    </a>
 </p>

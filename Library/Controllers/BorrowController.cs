@@ -9,8 +9,6 @@ namespace Library.Controllers
 {
     public class BorrowController : Controller
     {
-
-        Borrow b = new Borrow();
         // GET: Borrow
         public ActionResult Index()
         {
@@ -18,7 +16,7 @@ namespace Library.Controllers
         }
         public JsonResult getAllBorrows()
         {
-            return Json(b.getAllBorrows(), JsonRequestBehavior.AllowGet);
+            return Json(Borrow.getAllBorrows(), JsonRequestBehavior.AllowGet);
         }
 
 
@@ -27,7 +25,7 @@ namespace Library.Controllers
             object oId = this.Session["connected"];
             if (oId != null)
             {
-                return getOpenBorrows(Convert.ToInt32(oId));
+                return getOpenBorrows(oId.ToString());
             }
 
             return null;
@@ -38,21 +36,21 @@ namespace Library.Controllers
             object oId = this.Session["connected"];
             if (oId != null)
             {
-                return getBorrowsHistory(Convert.ToInt32(oId));
+                return getBorrowsHistory(oId.ToString());
             }
 
             return null;
         }
 
-        public JsonResult getBorrowsHistory(int userId)
+        public JsonResult getBorrowsHistory(string userId)
         {
-            return Json(b.getBorrowHistoryByUserID(userId), JsonRequestBehavior.AllowGet);
+            return Json(Borrow.getBorrowHistoryForUser(userId), JsonRequestBehavior.AllowGet);
         }
 
 
-        public JsonResult getOpenBorrows(int userId)
+        public JsonResult getOpenBorrows(string userId)
         {
-            return Json(b.getOpenBorrowByUserID(userId), JsonRequestBehavior.AllowGet);
+            return Json(Borrow.getOpenBorrowsForUser(userId), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult returnBorrow(int borrowSeq)
@@ -60,11 +58,11 @@ namespace Library.Controllers
             string message = "";
             try
             {
-                Borrow borrow = b.getBorrowById(borrowSeq);
+                Borrow borrow = Borrow.getBorrowById(borrowSeq);
                 borrow.ReturnDate = DateTime.Today;
                 Book book = Book.getBookByID(borrow.bookId);
                 book.returnBook();
-                borrow.updateBorrow(borrow);
+                borrow.updateBorrow();
 
             }
             catch
@@ -73,6 +71,47 @@ namespace Library.Controllers
             }
             return (Json(message, JsonRequestBehavior.AllowGet));
 
+        }
+
+        public JsonResult deleteBorrow(int borrowSeq)
+        {
+            string message = "";
+            if (!Borrow.deleteBorrow(borrowSeq)){
+                message = "there's a problem.... try again later";
+            }
+            return (Json(message, JsonRequestBehavior.AllowGet));
+        }
+
+        public JsonResult createBorrow(int bookId)
+        {
+            string message = "";
+            object oId = this.Session["connected"];
+            if (oId != null)
+            {
+                Borrower currentBorrower = Borrower.getBorrowerByUserID(oId.ToString());
+                if (currentBorrower != null)
+                {
+                    Borrow newBorrow = new Borrow();
+                    newBorrow.bookId = bookId;
+                    newBorrow.borrowDate = DateTime.Today;
+                    newBorrow.borrowerId = currentBorrower.id;
+
+                    if (!newBorrow.addNewBorrow())
+                    {
+                        message = "there's a problem.... try again later";
+                    }
+                }
+                else
+                {
+                    message = "current user isn't attached to any borrower!!!";
+                }
+            }
+            else
+            {
+                message = "there is no user connected";
+            }
+
+            return Json(message, JsonRequestBehavior.AllowGet);
         }
     }
 }

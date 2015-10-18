@@ -30,19 +30,19 @@ namespace Library.Models
         public DateTime borrowDate { get; set; }
         [DisplayName("Retuen Date")]
         public DateTime? ReturnDate { get; set; }
-
-        public Borrow getBorrowById(int id)
+ 
+        public static Borrow getBorrowById(int id)
         {
             paradiseContext context = new paradiseContext();
             return (context.borrows.Find(id));
         }
 
-        public IEnumerable<object> getOpenBorrowByUserID(int id)
+        public static IEnumerable<object> getOpenBorrowsForUser(string userId)
         {
             paradiseContext context = new paradiseContext();
 
             var borrows = (from borrow in context.borrows
-                           where (borrow.borrower.user.id == id &&
+                           where (borrow.borrower.user.id == userId &&
                                  borrow.ReturnDate == null)
                            select new
                            {
@@ -73,12 +73,12 @@ namespace Library.Models
             return borrows;
         }
 
-        public IEnumerable<object> getBorrowHistoryByUserID(int id)
+        public static IEnumerable<object> getBorrowHistoryForUser(string userID)
         {
             paradiseContext context = new paradiseContext();
 
             var borrows = (from borrow in context.borrows
-                           where (borrow.borrower.user.id == id &&
+                           where (borrow.borrower.user.id == userID &&
                                  borrow.ReturnDate != null)
                            select new
                            {
@@ -113,7 +113,7 @@ namespace Library.Models
             return borrows;
         }
 
-        public IEnumerable<object> getAllBorrows()
+        public static IEnumerable<object> getAllBorrows()
         {
             paradiseContext context = new paradiseContext();
 
@@ -148,15 +148,47 @@ namespace Library.Models
             return borrows;
         }
 
-        public bool updateBorrow(Borrow borrow)
+        public bool updateBorrow()
         {
             paradiseContext context = new paradiseContext();
             try
             {
-                context.Entry(borrow).State = EntityState.Modified;
+                context.Entry(this).State = EntityState.Modified;
                 context.SaveChanges();
             }
             catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool addNewBorrow(){
+            try
+            {
+                paradiseContext context = new paradiseContext();
+                context.borrows.Add(this);
+                context.SaveChanges();
+            }
+            catch {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool deleteBorrow(int seq)
+        {
+            try
+            {
+                paradiseContext context = new paradiseContext();
+
+                Borrow b = context.borrows.Find(seq);
+            
+                context.borrows.Remove(b);
+                context.SaveChanges();
+            }
+            catch ()
             {
                 return false;
             }

@@ -62,6 +62,11 @@
                     <p class="book-category" id="detailsBookCategory"></p>
                 </div>
                 <div class="modal-footer">
+                @{if (!ViewBag.isAdmin)
+                {
+                    <button type="button" class="btn btn-default" id="borrowBook">Borrow Book</button>
+                }
+                }
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>

@@ -11,7 +11,8 @@ namespace Library
             bundles.Add(new ScriptBundle("~/bundles/paradise").Include(
                         "~/Scripts/paradise/book.js",
                         "~/Scripts/paradise/borrower.js",
-                        "~/Scripts/paradise/borrow.js"));
+                        "~/Scripts/paradise/borrow.js",
+                        "~/Scripts/paradise/home.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
@@ -29,6 +30,7 @@ namespace Library
                       "~/Scripts/bootstrap*",
                       "~/Scripts/d3*",
                       "~/Scripts/jquery.dataTables*",
+                      "~/Scripts/bootbox.min.js",
                       "~/Scripts/dataTables.bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

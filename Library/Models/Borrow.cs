@@ -188,7 +188,7 @@ namespace Library.Models
                 context.borrows.Remove(b);
                 context.SaveChanges();
             }
-            catch ()
+            catch
             {
                 return false;
             }

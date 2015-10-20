@@ -1,39 +1,16 @@
-﻿$(document).ready(function () {
+﻿/// <reference path="borrower.js" />
+$(document).ready(function () {
     $("a[href='#borrower-library-card']").on('click', function () {
         showBorrowerProfile();
         showOpenBorrows();
     });
 
     $("a[href='#admin-manage-borrowers']").on('click', function () {
-        $.ajax({
-            url: "Borrower/getAllBorrowers",
-            type: "GET",
-            success: function (data) {
-                debugger;
-                $("#adminBorrowersTableBody").empty();
-                $.each(data, function (idx, obj) {
-                    row = "<tr><td>" + obj.id + "</td><td>" + obj.firstName + " " + obj.lastName +
-                     "</td><td>" + obj.sex + "</td><td>" + obj.address +
-                     "</td><td>" + obj.phone + "</td><td>" + obj.mail +
-                    "</td><td><span title='Details' " +
-                            "onclick='openBorrowerDetailsModal(" + obj.id + ")'" +
-                             "class='glyphicon glyphicon-list-alt'></span>" +
-                     "| <span title='Edit' " +
-                            "onclick='openEditBorrowerModal(" + obj.id + ")'" +
-                             "class='glyphicon glyphicon-edit'></span>" +
-                     "| <span title='Delete' " +
-                            "onclick='openDeleteBorrowerValidation(" + obj.id + ")'" +
-                             "class='glyphicon glyphicon-trash'></span>"
-                    + "</td></tr>";
-                    $("#adminBorrowersTableBody").append(row);
-                });
-
-            }
-        });
+        loadAllBorrowers();
     });
 
     $("#showBorrowerHistory").click(function () {
-        openBorrowsHistoryModal()
+        openBorrowsHistoryModal();
     });
 
     $("#saveBorrowerChanges").click(function () {
@@ -63,7 +40,57 @@
     });
 });
 
-function returnBook(borrowSeq) {
+function loadAllBorrowers() {
+    $.ajax({
+        url: "Borrower/getAllBorrowers",
+        type: "GET",
+        success: function (data) {
+            debugger;
+            $("#adminBorrowersTableBody").empty();
+            $.each(data, function (idx, obj) {
+                row = "<tr><td>" + obj.id + "</td><td>" + obj.firstName + " " + obj.lastName +
+                 "</td><td>" + obj.sex + "</td><td>" + obj.address +
+                 "</td><td>" + obj.phone + "</td><td>" + obj.mail +
+                "</td><td><span title='Details' " +
+                        "onclick='openBorrowerDetailsModal(" + obj.id + ")'" +
+                         "class='glyphicon glyphicon-list-alt'></span>" +
+                 "| <span title='Edit' " +
+                        "onclick='openEditBorrowerModal(" + obj.id + ")'" +
+                         "class='glyphicon glyphicon-edit'></span>" +
+                 "| <span title='Delete' " +
+                        "onclick='adminDeleteBorrower(" + obj.id + ")'" +
+                         "class='glyphicon glyphicon-trash'></span>"
+                + "</td></tr>";
+                $("#adminBorrowersTableBody").append(row);
+            });
+        }
+    });
+}
+
+
+function adminDeleteBorrower(borrowerId) {
+    bootbox.confirm("Are you sure you want to delete this book?", function (result) {
+        if (result == true) {
+            debugger;
+            $.ajax({
+                dataType: "json",
+                data: { "borrowerID": borrowerID },
+                url: "Borrower/deleteBorrower",
+                success: function (message) {
+                    if (!message) {
+                        loadAllBooks();
+                    }
+                    else {
+                        alert(message);
+                    }
+                }
+            });
+        }
+    });
+};
+
+
+function returnBookBorrower(borrowSeq) {
     $.ajax({
         dataType: "json",
         data: { "borrowSeq": borrowSeq },
@@ -92,7 +119,7 @@ function showOpenBorrows() {
                     $.each(borrowers, function (idx, obj) {
                         row = "<tr><td>" + obj.bookTitle + "</td><td>" + obj.bookAuthor +
                          "</td><td>" + obj.borrowDate +
-                         "</td><td>" + "<a onclick='returnBook(" + obj.borrowSeqNumber + ")'>Return Book</a>" + "</td></tr>";
+                         "</td><td>" + "<a onclick='returnBookBorrower(" + obj.borrowSeqNumber + ")'>Return Book</a>" + "</td></tr>";
                         $("#userOpenBorrowsTablaBody").append(row);
                     });
                 } else {
@@ -118,9 +145,7 @@ function openBorrowsHistoryModal() {
                 $("#userBorrowHistoryTableBody").append(row);
             });
 
-
             $('#userBorrowHistory').modal('show');
-
         }
     });
 };
@@ -150,3 +175,24 @@ function openBorrowsHistoryModal() {
             }
         });
     };
+
+    function openBorrowerDetailsModal(id) {
+        $.ajax({
+            dataType: "json",
+            url: "Borrower/getBorrower",
+            data: { "borrowerId": id },
+            success: function (borrower) {
+                debugger;
+                $('#detialsBorrowerName').text(borrower.firstName + " " + borrower.lastName);
+                $('#detialsBorrowerGender').text(borrower.sex);
+                $('#detialsBorrowerAddress').text(borrower.address);
+                $('#detialsBorrowerPhone').text(borrower.phone);
+                $('#detialsBorrowerMail').text(borrower.mail);
+
+            }
+        });
+
+        $('#borrowerDetailsModal').modal('show');
+    };
+
+

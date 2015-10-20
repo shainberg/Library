@@ -12,38 +12,123 @@ namespace Library.Controllers
 {
     public class BooksController : Controller
     {
-        public Book b = new Book();
+
+        public paradiseContext context = new paradiseContext();
 
         // GET: Books
         public ActionResult Index()
         {
-           
-
-            return View(Book.getAllBooks());
+            return View(getAllBooksDB());
         }
 
         public JsonResult getAllBooks()
         {
-            return Json(Book.getAllBooks(), JsonRequestBehavior.AllowGet);
+            return Json(getAllBooksDB(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult getBookById(int id)
         {
-            return Json(Book.getBookByID(id), JsonRequestBehavior.AllowGet);
+            return Json(getBookByIdDB(id), JsonRequestBehavior.AllowGet);
         }
 
         [HttpDelete]
-        public Boolean removeBookByID(int id)
+        public JsonResult deleteBook(int id)
         {
-            //TODO: if current user is admin
-            //if (!User.Identity.Name.Equals("") && MovieTheater.Models.User.isAdmin(User.Identity.Name))
-            if(true)
+            string message = "";
+            if (!deleteBookDB(id))
             {
-                Book book = Book.getBookByID(id);
-                return (book.deleteBook());
+                message = "there's a problem.... try again later";
+            }
+            return (Json(message, JsonRequestBehavior.AllowGet));
+
+        }
+
+        
+
+        public bool borrowBook(Book book)
+        {
+            bool answer = false;
+
+            if (book.copies > 0)
+            {
+                book.copies--;
+                if (updateBook(book))
+                {
+                    answer = true;
+                }
             }
 
-            return false;
+            return (answer);
+        }
+
+        public  Boolean addNewBook(Book book)
+        {
+            try
+            {
+                context.books.Add(book);
+                context.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool updateBook(Book book)
+        {
+            try
+            {
+                context.Entry(book).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public  Boolean deleteBookDB(int bookId)
+        {
+            try
+            {
+                Boolean answer = false;
+
+                Book book = context.books.Find(bookId);
+
+                context.books.Remove(book);
+
+                answer = (context.SaveChanges() > 0);
+
+                return (answer);
+
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public  IEnumerable<Book> getAllBooksDB()
+        {
+            return (context.books.ToList<Book>());
+        }
+
+        public Book getBookByIdDB(int id)
+        {
+            return (context.books.Find(id));
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                context.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

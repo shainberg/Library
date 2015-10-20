@@ -14,4 +14,33 @@
         <tbody id="adminBorrowsTableBody"></tbody>
     </table>
 </div>
+<!-- Modal -->
+<div id="borrowDetailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Details</h4>
+            </div>
+            <div class="modal-body">
+                <label>Borrower:</label><span id="detialsBorrowBorrower" ></span>
+                <br />
+                <label>Book Title:</label><span id="detialsBorrowBookTitle" ></span>
+                <br />
+                <label>Book Author:</label><span id="detialsBorrowBookAuthor" ></span>
+                <br />
+                <label>Borrow Date:</label><span id="detialsBorrowBorrowDate" ></span>
+                <br />
+                <label>Return Date:</label><span id="detialsBorrowReturnDate"></span>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="returnBookButton">Return Book</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 

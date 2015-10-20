@@ -4,32 +4,58 @@ $(document).ready(function () {
         showAllBooks();
     });
     $("a[href='#admin-manage-books']").on('click', function () {
-        $.ajax({
-            url: "Books/getAllBooks",
-            type: "GET",
-            success: function (data) {
-                $("#adminBooksTableBody").empty();
-                $.each(data, function (idx, obj) {
-                    row = "<tr><td>" + obj.title + "</td><td>" + obj.author +
-                     "</td><td>" + obj.series + "</td><td>" + obj.number +
-                     "</td><td>" + obj.publicationYear + "</td><td>" + obj.copies +
-                     "</td><td><span title='Details' " +
-                            "onclick='openBookDetailsModal(" + obj.id + ")'" +
-                             "class='glyphicon glyphicon-list-alt'></span>" +
-                     "| <span title='Edit' " +
-                            "onclick='openEditBookModal(" + obj.id + ")'" +
-                             "class='glyphicon glyphicon-edit'></span>" +
-                     "| <span title='Delete' " +
-                            "onclick='openDeleteBookValidation("+obj.id+")'" +
-                             "class='glyphicon glyphicon-trash'></span>"
-                    +"</td></tr>";
-                    $("#adminBooksTableBody").append(row);
-                });
-
-            }
-        });
+        loadAllBooks();
     });
 });
+
+
+function loadAllBooks() {
+    $.ajax({
+        url: "Books/getAllBooks",
+        type: "GET",
+        success: function (data) {
+            $("#adminBooksTableBody").empty();
+            $.each(data, function (idx, obj) {
+                row = "<tr><td>" + obj.title + "</td><td>" + obj.author +
+                 "</td><td>" + obj.series + "</td><td>" + obj.number +
+                 "</td><td>" + obj.publicationYear + "</td><td>" + obj.copies +
+                 "</td><td><span title='Details' " +
+                        "onclick='openBookDetailsModal(" + obj.id + ")'" +
+                         "class='glyphicon glyphicon-list-alt'></span>" +
+                 "| <span title='Edit' " +
+                        "onclick='openEditBookModal(" + obj.id + ")'" +
+                         "class='glyphicon glyphicon-edit'></span>" +
+                 "| <span title='Delete' " +
+                        "onclick='adminDeleteBook(" + obj.id + ")'" +
+                         "class='glyphicon glyphicon-trash'></span>"
+                + "</td></tr>";
+                $("#adminBooksTableBody").append(row);
+            });
+
+        }
+    });
+}
+
+function adminDeleteBook(bookId) {
+    bootbox.confirm("Are you sure you want to delete this book?", function (result) {
+        if (result == true) {
+            debugger;
+            $.ajax({
+                dataType: "json",
+                data: { "bookId": bookId },
+                url: "Books/deleteBook",
+                success: function (message) {
+                    if (!message) {
+                        loadAllBooks();
+                    }
+                    else {
+                        alert(message);
+                    }
+                }
+            });
+        }
+    });
+};
 
 function openBookDetailsModal(id) {
         $.ajax({
@@ -50,7 +76,7 @@ function openBookDetailsModal(id) {
                 });
             }});
 
-        $('#detailsModal').modal('show');
+        $('#bookDetailsModal').modal('show');
 };
 
 
@@ -59,33 +85,16 @@ function showAllBooks() {
         url: "Books/getAllBooks",
         type: "GET",
         success: function (data) {
-            debugger;
-            if ($.fn.DataTable.isDataTable($('#books'))) {
-                var oTable = $('#books').dataTable();
-            }
-            else {
-                var oTable = $('#books').dataTable({
-                    "autoWidth": false,
-                    "ordering": false,
-                    "columnDefs": [{
-                        "targets": [6],
-                        "mData":"id",
-                        "mRender": function (data, type, full) {
-                            debugger;
-                            return "<a onclick='openBookDetailsModal("+full[5]+")')>See Details</a>";
-                        }
-                    }]
-                });
-            }
-            oTable.fnClearTable();
-
-            var booksJson = [];
-
+            $("#userBooksTableBody").empty();
             $.each(data, function (idx, obj) {
-                booksJson.push([obj.title, obj.author, obj.series, obj.number, obj.publicationYear,obj.copies]);
+                row = "<tr><td>" + obj.title + "</td><td>" + obj.author +
+                 "</td><td>" + obj.series + "</td><td>" + obj.number +
+                 "</td><td>" + obj.publicationYear + "</td><td>" + obj.copies +
+                 "</td><td> <a onclick='openBookDetailsModal(" + obj.id + ")')>See Details</a>" 
+                + "</td></tr>";
+                $("#userBooksTableBody").append(row);
             });
 
-            oTable.fnAddData(booksJson);
         }
     });
 }

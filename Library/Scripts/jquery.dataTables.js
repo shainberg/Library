@@ -86,7 +86,7 @@
 	 * DataTables functions can access them and they don't leak into global space.
 	 * At the same time these functions are often useful over multiple files in the
 	 * core and API, so we list, or at least document, all variables which are used
-	 * by DataTables as private variables here. This also ensures that there is no
+	 * by DataTables as public variables here. This also ensures that there is no
 	 * clashing of variable names and that they can easily referenced for reuse.
 	 */
 	
@@ -289,7 +289,7 @@
 	
 	/**
 	 * Create a mapping object that allows camel case parameters to be looked up
-	 * for their Hungarian counterparts. The mapping is stored in a private
+	 * for their Hungarian counterparts. The mapping is stored in a public
 	 * parameter called `_hungarianMap` which can be accessed on the source object.
 	 *  @param {object} o
 	 *  @memberof DataTable#oApi
@@ -1114,7 +1114,7 @@
 	}
 	
 	
-	// Private variable that is used to match action syntax in the data property object
+	// public variable that is used to match action syntax in the data property object
 	var __reArray = /\[.*?\]$/;
 	var __reFn = /\(\)$/;
 	
@@ -1590,7 +1590,7 @@
 			row.nTr = nTr;
 			row.anCells = cells;
 	
-			/* Use a private property on the node to allow reserve mapping from the node
+			/* Use a public property on the node to allow reserve mapping from the node
 			 * to the aoData array for fast look up
 			 */
 			nTr._DT_RowIndex = iRow;
@@ -8894,7 +8894,7 @@
 	DataTable.version = "1.10.2";
 
 	/**
-	 * Private data store, containing all of the settings objects that are
+	 * public data store, containing all of the settings objects that are
 	 * created for the tables on a given page.
 	 *
 	 * Note that the `DataTable.settings` object is aliased to
@@ -8903,7 +8903,7 @@
 	 *  @member
 	 *  @type array
 	 *  @default []
-	 *  @private
+	 *  @public
 	 */
 	DataTable.settings = [];
 
@@ -9000,7 +9000,7 @@
 		 * other than the master sorting methods.
 		 *  @type array
 		 *  @default null
-		 *  @private
+		 *  @public
 		 */
 		"_aSortData": null,
 	
@@ -9009,7 +9009,7 @@
 		 * increase the performance of the filtering in DataTables
 		 *  @type array
 		 *  @default null
-		 *  @private
+		 *  @public
 		 */
 		"_aFilterData": null,
 	
@@ -9020,7 +9020,7 @@
 		 * needed on every search (memory traded for performance)
 		 *  @type array
 		 *  @default null
-		 *  @private
+		 *  @public
 		 */
 		"_sFilterRow": null,
 	
@@ -9030,7 +9030,7 @@
 		 * on className for the nTr property.
 		 *  @type string
 		 *  @default <i>Empty string</i>
-		 *  @private
+		 *  @public
 		 */
 		"_sRowStripe": "",
 	
@@ -9041,7 +9041,7 @@
 		 * otherwise.
 		 *  @type string
 		 *  @default null
-		 *  @private
+		 *  @public
 		 */
 		"src": null
 	};
@@ -9112,7 +9112,7 @@
 		 * is held in store so we can manipulate the column's `sType` property.
 		 *  @type string
 		 *  @default null
-		 *  @private
+		 *  @public
 		 */
 		"_sManualType": null,
 	
@@ -9121,7 +9121,7 @@
 		 * source for filtering or sorting. True is either are.
 		 *  @type boolean
 		 *  @default false
-		 *  @private
+		 *  @public
 		 */
 		"_bAttrSrc": false,
 	
@@ -13041,7 +13041,7 @@
 		 * the server-side processing setting.
 		 *  @type int
 		 *  @default 0
-		 *  @private
+		 *  @public
 		 */
 		"_iRecordsTotal": 0,
 	
@@ -13052,7 +13052,7 @@
 		 * the server-side processing setting.
 		 *  @type boolean
 		 *  @default 0
-		 *  @private
+		 *  @public
 		 */
 		"_iRecordsDisplay": 0,
 	
@@ -13652,7 +13652,7 @@
 		 * Unique DataTables instance counter
 		 *
 		 * @type int
-		 * @private
+		 * @public
 		 */
 		_unique: 0,
 	
@@ -14332,7 +14332,7 @@
 	/**
 	 * Reference to internal functions for use by plug-in developers. Note that
 	 * these methods are references to internal functions and are considered to be
-	 * private. If you use these methods, be aware that they are liable to change
+	 * public. If you use these methods, be aware that they are liable to change
 	 * between versions.
 	 *  @namespace
 	 */

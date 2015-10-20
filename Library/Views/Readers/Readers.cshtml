@@ -16,6 +16,7 @@
     </table>
 </div>
 
+
 <div id="edit-profile" class="tab-pane">
     <div>
         <br />
@@ -99,6 +100,34 @@
                     </thead>
                     <tbody id="userBorrowHistoryTableBody"></tbody>
                 </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="borrowerDetailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Details</h4>
+            </div>
+            <div class="modal-body">
+                <label>Name:</label><span id="detialsBorrowerName"></span>
+                <br />
+                <label>Gender:</label><span id="detialsBorrowerGender"></span>
+                <br />
+                <label>Address:</label><span id="detialsBorrowerAddress"></span>
+                <br />
+                <label>Phone:</label><span id="detialsBorrowerPhone"></span>
+                <br />
+                <label>Mail:</label><span  id="detialsBorrowerMail"></span>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>

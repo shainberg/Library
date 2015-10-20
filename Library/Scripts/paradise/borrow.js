@@ -20,7 +20,6 @@ function loadAllBorrows(){
                             "onclick='openBorrowDetailsModal(" + obj.borrowSeqNumber + ")'" +
                              "class='glyphicon glyphicon-list-alt'></span>" +
                      "| <span title='Edit' " +
-                            "onclick='openEditBorrowModal(" + obj.borrowSeqNumber + ")'" +
                              "class='glyphicon glyphicon-edit'></span>" +
                      "| <span title='Delete' " +
                             "onclick='adminDeleteBorrow(" + obj.borrowSeqNumber + ")'" +
@@ -31,6 +30,49 @@ function loadAllBorrows(){
         }
     });
 }
+
+
+
+function returnBookAdmin(borrowSeq) {
+    $.ajax({
+        dataType: "json",
+        data: { "borrowSeq": borrowSeq },
+        url: "Borrow/returnBorrow",
+        success: function (message) {
+            if (!message) {
+                $('#borrowDetailsModal').modal('hide');
+                loadAllBorrows();
+            }
+            else {
+                alert(message);
+            }
+        }
+    });
+};
+
+
+function openBorrowDetailsModal(id) {
+    $.ajax({
+        dataType: "json",
+        url: "Borrow/getBorrow",
+        data: { "seqNum": id },
+        success: function (borrow) {
+            debugger;
+            $('#detialsBorrowBorrower').text(borrow.borrowerFirstName + " " + borrow.borrowerLastName);
+            $('#detialsBorrowBookTitle').text(borrow.bookTitle);
+            $('#detialsBorrowBookAuthor').text(borrow.bookAuthor);
+            $('#detialsBorrowBorrowDate').text(borrow.borrowDate)
+            $('#detialsBorrowReturnDate').text(borrow.returnDate);
+            $('#returnBookButton').click(function () {
+                returnBookAdmin(id)
+            });
+        }
+    });
+
+    $('#borrowDetailsModal').modal('show');
+};
+
+
 
 function borrowBook(bookId) {
     $.ajax({

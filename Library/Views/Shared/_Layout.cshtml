@@ -43,24 +43,18 @@
                 <ul class="nav navbar-nav">
                     <li id="weather"><span id="temperature" style="color:white; font-size:xx-large"></span><img id="weatherImg"/></li>
                     <li class="active" id="mainParadise"><a href="#HomePage" role="tab" data-toggle="tab">PARADISE</a></li>
-                    <li><a href="#all-books" role="tab" data-toggle="tab">Books</a></li>
                     @{if (ViewBag.isAdmin)
-                        {
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    
-                                    <li><a href="#admin-manage-books" role="tab" data-toggle="tab">Manage Books</a></li>
-                                    <li><a href="#admin-manage-borrows" role="tab" data-toggle="tab">Manage Borrows</a></li>
-                                    <li><a href="#admin-manage-borrowers" role="tab" data-toggle="tab">Manage Borrowers</a></li>
-                                </ul>
-                            </li>
+                        {     
+                            <li><a href="#admin-manage-books" role="tab" data-toggle="tab">Books</a></li>
+                            <li><a href="#admin-manage-borrows" role="tab" data-toggle="tab">Borrows</a></li>
+                            <li><a href="#admin-manage-borrowers" role="tab" data-toggle="tab">Borrowers</a></li>
                         }
 }
                     @{if (!ViewBag.isAdmin)
-                        { 
-                            <li><a href="#borrower-library-card" role="tab" data-toggle="tab">Library Card</a></li>
-                        }
+                    {
+                        <li><a href="#all-books" role="tab" data-toggle="tab">Books</a></li>
+                        <li><a href="#borrower-library-card" role="tab" data-toggle="tab">Library Card</a></li>
+                    }
                     }
                                       @*<li><a href="#readers" role="tab" data-toggle="tab">Readers</a></li>*@
                 </ul>

@@ -189,10 +189,46 @@ function openBorrowsHistoryModal() {
                 $('#detialsBorrowerPhone').text(borrower.phone);
                 $('#detialsBorrowerMail').text(borrower.mail);
 
+                showMap(borrower);
             }
         });
 
         $('#borrowerDetailsModal').modal('show');
     };
+
+    function showMap(borrower) {
+        var geocoder;
+        var map;
+        
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 8,
+            center: latlng
+        }
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        codeAddress(borrower, geocoder, map);
+    }
+
+    function codeAddress(borrower, geocoder, map) {
+        geocoder.geocode({ 'address': borrower.address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var latitude = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                /*latitude.lat = results[0].geometry.location.lat();
+                latitude.lng = results[0].geometry.location.lng();*/
+
+                map.setCenter(latitude);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: latitude,
+                    title: borrower.firstName.concat(' ').concat(borrower.lastName)
+                });
+            } else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
+        });
+        google.maps.event.trigger(map, 'resize');
+    }
 
 

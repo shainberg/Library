@@ -61,7 +61,24 @@ namespace Library.Controllers
             return (Json(message, JsonRequestBehavior.AllowGet));
         }
 
-        [HttpDelete]
+        public JsonResult createBorrower([Bind(Include = "id,userId,firstName,lastName,sex,phone,address,mail")] Borrower borrower)
+        {
+            string message = "";
+            if (ModelState.IsValid)
+            {
+                if (!addNewBorrowerDB(borrower))
+                {
+                    message = "there's a problem.... try again later";
+                }
+            }
+            else
+            {
+                message = "the borrower's parameters are not valid";
+            }
+
+            return (Json(message, JsonRequestBehavior.AllowGet));
+        }
+
         public JsonResult deleteBorrower(int borrowerID)
         {
             string message = "";
@@ -132,10 +149,10 @@ namespace Library.Controllers
         public bool updateBorrowerDB(Borrower borrower)
         {
             try{
-                context.Entry(this).State = EntityState.Modified;
+                context.Entry(borrower).State = EntityState.Modified;
                 context.SaveChanges();
             }
-            catch{
+            catch(Exception e){
                 return false;
             }
             return true;

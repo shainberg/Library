@@ -31,36 +31,17 @@ namespace Library.Controllers
             return Json(getBookByIdDB(id), JsonRequestBehavior.AllowGet);
         }
 
-        [HttpDelete]
-        public JsonResult deleteBook(int id)
+        public JsonResult deleteBook(int bookId)
         {
             string message = "";
-            if (!deleteBookDB(id))
+            if (!deleteBookDB(bookId))
             {
                 message = "there's a problem.... try again later";
             }
             return (Json(message, JsonRequestBehavior.AllowGet));
 
         }
-
         
-
-        public bool borrowBook(Book book)
-        {
-            bool answer = false;
-
-            if (book.copies > 0)
-            {
-                book.copies--;
-                if (updateBook(book))
-                {
-                    answer = true;
-                }
-            }
-
-            return (answer);
-        }
-
         public  Boolean addNewBook(Book book)
         {
             try
@@ -121,6 +102,70 @@ namespace Library.Controllers
         {
             return (context.books.Find(id));
         }
+
+        public JsonResult getBestBooksJson()
+        {
+            return Json(getBestBooks(), JsonRequestBehavior.AllowGet);
+        }
+
+        public IEnumerable<object> getBestBooks()
+        {
+            var books =
+            from b in context.borrows
+            group b by b.book into grouping
+            orderby grouping.Count() descending
+            select new
+            {
+                bookId = grouping.Key.id,
+                bookTitle = grouping.Key.title,
+                bookAuthor = grouping.Key.author,
+                bookSeries = grouping.Key.series,
+                bookNumber = grouping.Key.number,
+                bookPublicationYear = grouping.Key.publicationYear,
+                bookAvailableCopies = grouping.Key.copies,
+                bookCount = grouping.Count()
+            };
+
+            return books;
+        }
+
+        public JsonResult EditBook([Bind(Include = "id,title,author,publisher,publicationYear,language,series,number,summery,category,copies")] Book book)
+        {
+            string message = "";
+            if (ModelState.IsValid)
+            {
+                if (!updateBook(book))
+                {
+                    message = "there's a problem.... try again later";
+                }
+            }
+            else
+            {
+                message = "the book's parameters are not valid";
+            }
+
+            return (Json(message, JsonRequestBehavior.AllowGet));
+        }
+
+
+        public JsonResult createBook([Bind(Include = "title,author,publisher,publicationYear,language,series,number,summery,category,copies")] Book book)
+        {
+            string message = "";
+            if (ModelState.IsValid)
+            {
+                if (!addNewBook(book))
+                {
+                    message = "there's a problem.... try again later";
+                }
+            }
+            else
+            {
+                message = "the book's parameters are not valid";
+            }
+
+            return (Json(message, JsonRequestBehavior.AllowGet));
+        }
+
 
         protected override void Dispose(bool disposing)
         {

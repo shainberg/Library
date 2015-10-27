@@ -61,6 +61,17 @@ namespace Library.Controllers
             return Json(getOpenBorrowsForUser(userId), JsonRequestBehavior.AllowGet);
         }
 
+        public bool borrowBook(int bookId)
+        {
+            Book book = new BooksController().getBookByIdDB(bookId);
+            if (book.copies <= 0)
+            {
+                return false;
+            }
+            book.copies--;
+            return (new BooksController()).updateBook(book);
+        }
+
         public bool returnBook(Book book)
         {
             book.copies++;
@@ -75,7 +86,7 @@ namespace Library.Controllers
                 Borrow borrow = getBorrowById(borrowSeq);
                 borrow.ReturnDate = DateTime.Today;
                 Book book = new BooksController().getBookByIdDB(borrow.bookId);
-                returnBook(book);
+                returnBook(book); 
                 updateBorrow(borrow);
 
             }
@@ -110,7 +121,11 @@ namespace Library.Controllers
                     newBorrow.borrowDate = DateTime.Today;
                     newBorrow.borrowerId = currentBorrower.id;
 
-                    if (!addNewBorrow(newBorrow))
+                    if (!borrowBook(bookId))
+                    {
+                        message = "there are no available copies of this book";
+                    }
+                    else if (!addNewBorrow(newBorrow))
                     {
                         message = "there's a problem.... try again later";
                     }

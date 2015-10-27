@@ -40,6 +40,100 @@ $(document).ready(function () {
     });
 });
 
+function openBorrowerModal(id) {
+    if (id) {
+        $.ajax({
+            dataType: "json",
+            url: "Borrower/getBorrower",
+            data: { "borrowerId": id },
+            success: function (borrower) {
+                debugger;
+                $('#borrowerModalTitle').text("Edit");
+
+                $('#borrowerModalUserId').val(borrower.userId);
+                $('#borrowerModalFirstName').val(borrower.firstName);
+                $('#borrowerModalLastName').val(borrower.lastName);
+                $('#borrowerModalAddress').val(borrower.address);
+                $('#borrowerModalPhone').val(borrower.phone);
+                $('#borrowerModalMail').val(borrower.mail);
+                $("input:radio[name=borrowerModalGender][value=" + borrower.sex + "]").prop('checked', true);
+
+                $('#createBorrowerButton').hide();
+
+                $('#saveBorrowerChangesButton').click(function () {
+                    updateBorrower(id)
+                });
+                $('#saveBorrowerChangesButton').show();
+                $('#borrowerModalUser').hide();
+            }
+        });
+    }
+    else {
+
+        $('#borrowerModalTitle').text("Create");
+        $(".borrowerInput").val("");
+        $('#createBorrowerButton').show();
+        $("input:radio[name=borrowerModalGender]").prop('checked', false);
+        $('#saveBorrowerChangesButton').hide();
+    }
+
+    $('#borrowerModal').modal('show');
+}
+    
+function createNewBorrower() {
+    $.ajax({
+        dataType: "json",
+        data: createBorrowerData(),
+        url: "Borrower/createBorrower",
+        success: function (message) {
+            if (!message) {
+                loadAllBorrowers();
+                $('#borrowerModal').modal('hide');
+            }
+            else {
+                alert(message);
+            }
+        }
+    });
+}
+
+function createBorrowerData(id) {
+    json = {
+        "userId": $("#updateBorrowerUserId").val(),
+        "firstName": $('#borrowerModalFirstName').val(),
+        "lastName": $('#borrowerModalLastName').val(),
+        "sex": $('input:radio[name=borrowerModalGender]:checked').val(),
+        "phone":  $('#borrowerModalPhone').val(),
+        "address":  $('#borrowerModalAddress').val(),
+        "mail": $('#borrowerModalMail').val()
+    };
+
+    if (id) {
+        json.id = id
+    }
+
+    return json;
+}
+
+function updateBorrower(id) {
+    $.ajax({
+        dataType: "json",
+        data: createBorrowerData(id),
+        url: "Borrower/updateBorrower",
+        success: function (message) {
+            if (!message) {
+                loadAllBorrowers();
+                $('#borrowerModal').modal('hide');
+
+            }
+            else {
+                alert(message);
+            }
+        }
+    });
+}
+
+
 function loadAllBorrowers() {
     $.ajax({
         url: "Borrower/getAllBorrowers",
@@ -55,7 +149,7 @@ function loadAllBorrowers() {
                         "onclick='openBorrowerDetailsModal(" + obj.id + ")'" +
                          "class='glyphicon glyphicon-list-alt'></span>" +
                  "| <span title='Edit' " +
-                        "onclick='openEditBorrowerModal(" + obj.id + ")'" +
+                        "onclick='openBorrowerModal(" + obj.id + ")'" +
                          "class='glyphicon glyphicon-edit'></span>" +
                  "| <span title='Delete' " +
                         "onclick='adminDeleteBorrower(" + obj.id + ")'" +
@@ -69,16 +163,16 @@ function loadAllBorrowers() {
 
 
 function adminDeleteBorrower(borrowerId) {
-    bootbox.confirm("Are you sure you want to delete this book?", function (result) {
+    bootbox.confirm("Are you sure you want to delete this borrower?", function (result) {
         if (result == true) {
             debugger;
             $.ajax({
                 dataType: "json",
-                data: { "borrowerID": borrowerID },
+                data: { "borrowerID": borrowerId},
                 url: "Borrower/deleteBorrower",
                 success: function (message) {
                     if (!message) {
-                        loadAllBooks();
+                        loadAllBorrowers();
                     }
                     else {
                         alert(message);
@@ -141,7 +235,7 @@ function openBorrowsHistoryModal() {
             $.each(borrowers, function (idx, obj) {
                 row = "<tr><td>" + obj.bookTitle + "</td><td>" + obj.bookAuthor +
                      "</td><td>" + obj.borrowDate +
-                     "</td><td>" + "<a onclick='openDetailsModal(" + obj.bookId + ")'>See Book Detils</a>" + "</td></tr>";
+                     "</td><td>" + "<a onclick='openBookDetailsModal(" + obj.bookId + ")'>See Book Detils</a>" + "</td></tr>";
                 $("#userBorrowHistoryTableBody").append(row);
             });
 

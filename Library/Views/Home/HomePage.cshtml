@@ -1,23 +1,43 @@
 ﻿<script src="https://maps.googleapis.com/maps/api/js"></script>
-<script>
-    function initialize() {
-        var mapCanvas = document.getElementById('map');
-        var mapOptions = {
-            center: new google.maps.LatLng(31.970303, 34.771605),
-            zoom: 10,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        var map = new google.maps.Map(mapCanvas, mapOptions);
-        var marker = new google.maps.Marker({
-            position: { lat: 31.970303, lng: 34.771605 },
-            map: map,
-            title: 'Paradise Library'
+<html>
+<head>
+    <script>
+        $(function () {
+            var elem = document.getElementById('theBestCanvasEver');
+            var ctx = elem.getContext('2d');
+            // Draw black rect
+            ctx.fillRect(60, 42, 114, 114);
+
+            // Draw blue rect
+            ctx.fillStyle = "rgb(0, 162, 232)";
+            ctx.fillRect(108, 78, 102, 102);
+
+            // Increase line width
+            ctx.lineWidth = 5;
+
+            // Draw black rect outline
+            ctx.strokeStyle = "rgb(0, 0, 0)";
+            ctx.strokeRect(60, 228, 114, 114);
+
+            // Draw blue rect outline
+            ctx.strokeStyle = "rgb(0, 162, 232)";
+            ctx.strokeRect(36, 64, 34, 34);
+
+            // Draw transparent yellow rect
+            ctx.fillStyle = "rgba(255, 255, 0, 0.75)";
+            ctx.fillRect(52, 46, 34, 34);
+
+            ctx.strokeStyle = "rgb(0, 0, 0)";
+            ctx.font = '48px serif';
+            ctx.strokeText("I have always imagined that paradise", 100, 250);
+            ctx.strokeText("will be a kind of library", 250, 300);
+            ctx.restore();
         });
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-
-<canvas id="logoCanvas" width="578" height="200"></canvas>
-
-<!--<div id="map" style="width:350px; height:250px;"></div>-->
-
+    </script>
+</head>
+<body>
+    <canvas id="theBestCanvasEver" width="1000" height="500">
+        Your browser does not support canvas. Upgrade yourself.
+    </canvas>
+</body>
+</html>

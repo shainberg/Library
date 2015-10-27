@@ -18,10 +18,8 @@ function loadAllBorrows(){
                  "</td><td>" + obj.borrowDate + "</td><td>" + obj.returnDate +
                 "</td><td><span title='Details' " +
                             "onclick='openBorrowDetailsModal(" + obj.borrowSeqNumber + ")'" +
-                             "class='glyphicon glyphicon-list-alt'></span>" +
-                     "| <span title='Edit' " +
-                             "class='glyphicon glyphicon-edit'></span>" +
-                     "| <span title='Delete' " +
+                            "class='glyphicon glyphicon-list-alt'></span>" +
+                            "| <span title='Delete' " +
                             "onclick='adminDeleteBorrow(" + obj.borrowSeqNumber + ")'" +
                              "class='glyphicon glyphicon-trash'></span>"
                     + "</td></tr>";
@@ -70,23 +68,6 @@ function openBorrowDetailsModal(id) {
     });
 
     $('#borrowDetailsModal').modal('show');
-};
-
-
-
-function borrowBook(bookId) {
-    $.ajax({
-        dataType: "json",
-        data: { "bookId": bookId },
-        url: "Borrow/createBorrow",
-        success: function (message) {
-            if (!message) {
-            }
-            else {
-                alert(message);
-            }
-        }
-    });
 };
 
 

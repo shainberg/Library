@@ -1,5 +1,6 @@
 ﻿<div id="admin-manage-borrowers" class="tab-pane">
     <h2>Borrowers</h2>
+    <span class="glyphicon glyphicon-plus" title="New" onclick="openBorrowerModal()"></span>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -25,7 +26,7 @@
             <label>First Name:</label><input class="form-control"  id="updateBorrowerFirstName" />
             <label>Last Name:</label><input class="form-control" id="updateBorrowerLastName" />
         <br />
-            <label>Sex:</label>
+            <label>Gender:</label>
             <label class="radio-inline">
                 <input type="radio" name="sexOptionsRadio" value="M"> Male
             </label>
@@ -51,7 +52,7 @@
         <div class="borrower-details">
             <label>Name:</label><span id="borrowerFirstName"></span>&nbsp;<span id="borrowerLastName"></span>
             <br />
-            <label>Sex:</label><span id="borrowerSex"></span>
+            <label>Gender:</label><span id="borrowerSex"></span>
             <br />
             <label>Phone:</label><span id="borrowerPhone"></span>
             <br />
@@ -136,3 +137,52 @@
         </div>
     </div>
 </div>
+
+@{if (ViewBag.isAdmin)
+{
+
+    <div id="borrowerModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 id="borrowerModalTitle" class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="borrowerModalUser">
+                        <label>User ID:</label> <input class="borrowerInput form-control" id="borrowerModalUserId" />
+                        
+                    </div>
+                    <label>First Name:</label> <input class="borrowerInput form-control" id="borrowerModalFirstName" />
+                    
+                    <label>Last Name:</label> <input class="borrowerInput form-control" id="borrowerModalLastName" />
+                    <br />
+                        <label>Gender:</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="borrowerModalGender" value="M"> Male
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="borrowerModalGender" value="F"> Female
+                        </label>
+                    <br />
+                    <label>Address:</label> <input class="borrowerInput form-control" id="borrowerModalAddress" />
+                    
+                    <label>Phone:</label> <input class="borrowerInput form-control" id="borrowerModalPhone" />
+                    
+                    <label>Mail:</label> <input class="borrowerInput form-control" id="borrowerModalMail" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="createNewBorrower()" id="createBorrowerButton">Add</button>
+                        <button type="button" class="btn btn-default" id="saveBorrowerChangesButton">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+}
+
+
+

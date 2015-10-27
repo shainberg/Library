@@ -13,7 +13,8 @@ div.details-div{
     margin-left:5px;
     margin-top:10px;
     display:inline-block;
-} 
+}
+ 
 .book-picture{
     max-width: 100px;
     max-height: 200px;
@@ -31,6 +32,9 @@ h6.sub-title{
     background: #dddddd;
     width: 700px;
     border-radius: 25px;
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
 }
 .book-title{
     text-shadow: 1px 1px #a1a1a1;

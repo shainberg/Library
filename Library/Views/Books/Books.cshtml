@@ -1,5 +1,6 @@
 ﻿<div id="admin-manage-books" class="tab-pane">
     <h2>Books</h2>
+    <span class="glyphicon glyphicon-plus" title="New" onclick="openBookModal()"></span>
     <table  class="table table-striped">
         <thead>
             <tr>
@@ -13,6 +14,24 @@
             </tr>
         </thead>
         <tbody id="adminBooksTableBody"></tbody>
+    </table>
+</div>
+
+<div id="best-books" class="tab-pane">
+    <h2>Most Borrowed Books</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Series</th>
+                <th>Number</th>
+                <th>Publication Year</th>
+                <th>Available Copies</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="bestBooksTableBody"></tbody>
     </table>
 </div>
 
@@ -49,7 +68,7 @@
                     <img class="book-picture" src="../../Img/No_Image_Available.png" />
                     <div class="details-div">
                         <h4 class="book-title" id="detailsBookTitle"></h4> &nbsp;
-                        <h5 class="book-series" id=" detailsbookseries"></h5>
+                        <h5 class="book-series" id="detailsBookSeries"></h5>
                         <h6 class="sub-title" id="detailsBookAuthor"></h6>
                         <h6 class="sub-title" id="detailsCopies"></h6>
                     </div>
@@ -73,3 +92,61 @@
         </div>
     </div>
 </div>
+
+
+@{if (ViewBag.isAdmin)
+                    {
+
+<div id="bookModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="bookModalTitle" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-6 form-group">
+                        <label>Title:</label> <input class="bookInput form-control" id="bookModalBookTitle" />
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <label>Author:</label> <input class="bookInput form-control" id="bookModalAuthor" />
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <label>Publisher:</label> <input class="bookInput form-control" id="bookModalPublisher" />
+                    </div>    
+                    <div class="col-xs-3 form-group">
+                        <label>Publication Year:</label> <input class="bookInput form-control" id="bookModalPublicationYear" />
+                    </div>    
+                    <div class="col-xs-2 form-group">
+                        <label>Language:</label> <input class="bookInput form-control" id="bookModalLanguage" />
+                    </div>
+                    <div class="col-xs-4 form-group">
+                        <label>Series:</label> <input class="bookInput form-control" id="bookModalSeries" />
+                    </div>
+                    <div class="col-xs-2 form-group">
+                        <label>Number:</label> <input class="bookInput form-control" id="bookModalNumber" />
+                    </div>
+                    <div class="col-xs-2 form-group">
+                        <label>Category:</label> <input class="bookInput form-control" id="bookModalCategory" />
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        <label>Available Copies:</label> <input class="bookInput form-control" id="bookModalCopies" />
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <label>Summery:</label><textarea class="field form-control bookInput" rows="7" cols="20" id="bookModalSummery"></textarea>
+                    </div>
+                    </div>
+                     <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="createNewBook()" id="createBook">Add</button>
+                    <button type="button" class="btn btn-default" id="saveBookChanges">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                    }
+}

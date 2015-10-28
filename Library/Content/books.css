@@ -1,4 +1,10 @@
-﻿h5, h4{
+﻿/*Font*/
+@font-face {
+   font-family: myAwesomeFont;
+   src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/fonts/fontawesome-webfont.woff);
+}
+
+h5, h4{
     display:inline;
 }
 .modal-dialog{
@@ -35,7 +41,14 @@ h6.sub-title{
     -webkit-column-count: 3; /* Chrome, Safari, Opera */
     -moz-column-count: 3; /* Firefox */
     column-count: 3;
+    font-family: myAwesomeFont;
+    transition: background-color 1s ease;
 }
+
+.book-summery:hover{
+    background: #4cff00;
+}
+
 .book-title{
     text-shadow: 1px 1px #a1a1a1;
 }

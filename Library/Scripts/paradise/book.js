@@ -150,6 +150,7 @@ function loadAllBooks() {
                 $("#adminBooksTableBody").append(row);
             });
 
+            initBooksDataTable();
         }
     });
 }
@@ -294,30 +295,28 @@ function showAllBooks() {
     }
 }(jQuery));
 
-function fnCreateInput(colIndex) {
+function fnCreateInputBooks(colIndex) {
     debugger;
     var r = '<input type="text" ';
-
-
-
-    r += 'placeholder="Search ' + $('#adminBooksTableBody thead th').eq(colIndex).text() + '"/>';
+    r += 'placeholder="Search ' + $('#adminBooksTable thead th').eq(colIndex).text() + '"/>';
 
     return r;
 }
 
-function initDataTable() {
+function initBooksDataTable() {
     debugger;
     /* Initialise the DataTable */
-    var oTable = $('#adminBooksTableBody').dataTable({
+    var oTable = $('#adminBooksTable').dataTable({
         "oLanguage": {
             "sSearch": "Search all columns:"
         }
     });
 
     /* Add a select menu for each TH element in the table footer */
-    $("tfoot th").each(function (i) {
+    $("#adminBooksTable tfoot th").each(function (i) {
+        debugger;
         if (i < 3) {
-            this.innerHTML = fnCreateInput(i);
+            this.innerHTML = fnCreateInputBooks(i);
             $('input[type="text"]', this).on('keyup', function () {
                 debugger;
                 oTable.fnFilter($(this).val(), i);

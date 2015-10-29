@@ -323,7 +323,7 @@ function initBooksDataTable() {
             });
         }
         else {
-            $("tfoot th")[i].innerHTML = "";
+            $("#adminBooksTable tfoot th")[i].innerHTML = "";
         }
     });
 }

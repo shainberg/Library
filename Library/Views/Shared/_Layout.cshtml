@@ -18,12 +18,8 @@
     url : "http://api.wunderground.com/api/fec570dea30f6169/conditions/q/autoip.json",
     dataType : "jsonp",
     success : function(parsed_json) {
-        debugger;
-        $("#weatherImg").attr('src', 'http://icons.wxug.com/i/c/k/nt_clear.gif');
+        $("#weatherImg").attr('src', parsed_json.current_observation.icon_url);
         $("#temperature").html(parsed_json.current_observation.feelslike_c + '&deg;');
-    /*var location = parsed_json['location']['city'];
-    var temp_f = parsed_json['current_observation']['temp_f'];
-    alert("Current temperature in " + location + " is: " + temp_f);*/
     }
     });
     });
